@@ -11,17 +11,17 @@ CREATE TABLE item (
     item_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     item_name TEXT NOT NULL,
     item_description TEXT NOT NULL,
-    item_price DECIMAL(5,2) NOT NULL,
+    item_price DECIMAL(5,2) NOT NULL
 );
 
-CREATE TABLE order (
-    ord_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    ord_time DATETIME NOT NULL,
+CREATE TABLE delivery (
+    del_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    del_time DATETIME NOT NULL,
     cus_id INTEGER NOT NULL REFERENCES customer(cus_id)
 );
 
 CREATE TABLE order_item (
-    ord_id INTEGER NOT NULL REFERENCES order(ord_id),
+    del_id INTEGER NOT NULL REFERENCES delivery(ord_id),
     item_id INTEGER NOT NULL REFERENCES item(item_id),
-    PRIMARY KEY (ord_id, item_id)
+    PRIMARY KEY (del_id, item_id)
 );
