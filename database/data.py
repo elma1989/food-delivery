@@ -1,4 +1,5 @@
 from sqlite3 import connect, Connection, Cursor, Error
+from abc import ABC, abstractmethod
 
 class Data:
     def __init__(self):
@@ -24,3 +25,17 @@ class Data:
             self.con.close()
             self.__c = None
             self.__con = None
+
+class DataObject(Data, ABC):
+    def __init__(self):
+        Data.__init__(self)
+        ABC.__init__(self)
+
+    @abstractmethod
+    def exists(self) -> bool: pass
+
+    @abstractmethod
+    def add(self) -> int: pass
+
+    @abstractmethod
+    def to_dict(self) -> dict: pass
