@@ -2,6 +2,9 @@ CREATE TABLE customer (
     cus_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     cus_email TEXT NOT NULL,
     cus_hash_password CHAR(32) NOT NULL,
+    cus_first_name TEXT NOT NULL,
+    cus_last_name TEXT NOT NULL,
+    cus_bith_date DATE NOT NULL,
     cus_street_no VARCHAR(30) NOT NULL,
     cus_zip CHAR(5) NOT NULL,
     cus_city VARCHAR(24) NOT NULL
