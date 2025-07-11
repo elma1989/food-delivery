@@ -16,7 +16,7 @@ class Data:
         if not self.con:
             try:
                 self.__con = connect('database/food.db')
-                self.__c = self.con.cursor()
+                if self.con: self.__c = self.con.cursor()
             except Error as e: print(e)
             
     def close(self) -> None:
