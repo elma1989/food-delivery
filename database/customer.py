@@ -3,6 +3,7 @@ from datetime import datetime
 from database import DataObject, Error
 
 class Customer(DataObject):
+    # region properties
     def __init__(self,email:str, fname:str, lname:str, birth_date:str, street_no:str, zip_code:str, city:str, id:int=0, hpassword:str='') -> None:
         super().__init__()
         self.__id = id
@@ -30,7 +31,8 @@ class Customer(DataObject):
     def __eq__(self, other) -> bool:
         if not isinstance(other, Customer): return False
         return self.fname == other.fname and self.lname == other.lname
-    
+    # endrgion
+    # region methods
     @staticmethod
     def hash(password:str) -> str:
         return hashlib.sha256(password.encode()).hexdigest()
@@ -86,3 +88,4 @@ class Customer(DataObject):
     
     def login(self, password:str) -> bool:
         return self.hash(password) == self.__hpassword
+    # endregion
