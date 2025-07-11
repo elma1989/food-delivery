@@ -12,7 +12,7 @@ CREATE TABLE customer (
 
 CREATE TABLE item (
     item_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    item_name TEXT NOT NULL,
+    item_name TEXT NOT NULL UNIQUE,
     item_description TEXT NOT NULL,
     item_price DECIMAL(5,2) NOT NULL
 );
