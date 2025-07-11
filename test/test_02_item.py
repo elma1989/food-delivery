@@ -12,3 +12,15 @@ def test_add_exists():
 
     assert margherita.exists()
     assert mgr.get_item('Pizza Margherita')
+
+def test_to_dict():
+    mgr = Manager()
+    margherita = mgr.get_item('Pizza Margherita')
+
+    assert margherita.to_dict() == {
+        'id': 1,
+        'name': 'Pizza Margherita',
+        'type': 'pizza',
+        'desc': 'Pizza mit Mozerella und Tomate',
+        'price': 4.00
+    }

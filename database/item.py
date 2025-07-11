@@ -59,4 +59,10 @@ class Item(DataObject):
         return 0 if success else 3
     
     def to_dict(self) -> dict:
-        return {}
+        return {
+            'id': self.__id,
+            'name': self.name,
+            'type': self.__food_type,
+            'desc': self.desc,
+            'price': self.price
+        }
