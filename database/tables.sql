@@ -1,6 +1,6 @@
 CREATE TABLE customer (
     cus_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    cus_email TEXT NOT NULL,
+    cus_email TEXT NOT NULL UNIQUE,
     cus_hash_password CHAR(32) NOT NULL,
     cus_first_name TEXT NOT NULL,
     cus_last_name TEXT NOT NULL,
@@ -20,11 +20,11 @@ CREATE TABLE item (
 CREATE TABLE delivery (
     del_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     del_time DATETIME NOT NULL,
-    cus_id INTEGER NOT NULL REFERENCES customer(cus_id)
+    cus_id INTEGER NOT NULL REFERENCES customer(cus_id) ON DELETE CASCADE
 );
 
-CREATE TABLE order_item (
-    del_id INTEGER NOT NULL REFERENCES delivery(ord_id),
+CREATE TABLE delivery_item (
+    del_id INTEGER NOT NULL REFERENCES delivery(ord_id) ON DELETE CASCADE,
     item_id INTEGER NOT NULL REFERENCES item(item_id),
     PRIMARY KEY (del_id, item_id)
 );
