@@ -30,3 +30,10 @@ def test_to_dict():
         'zipCode': '12345',
         'city': 'Musterstadt'
     }
+
+def test_login():
+    manager = Manager()
+    john = manager.get_customer('john.doe@mail.de')
+
+    assert not john.login('Passwort')
+    assert john.login('Password')

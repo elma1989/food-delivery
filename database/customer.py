@@ -7,7 +7,7 @@ class Customer(DataObject):
         super().__init__()
         self.__id = id
         self.__email = email
-        self.__hpassord = hpassword
+        self.__hpassword = hpassword
         self.__fname = fname
         self.__lname = lname
         self.__birth_date = datetime.strptime(birth_date, '%Y-%m-%d')
@@ -36,7 +36,7 @@ class Customer(DataObject):
         return hashlib.sha256(password.encode()).hexdigest()
     
     def create_password(self, password:str) -> None:
-        self.__hpassord = self.hash(password)
+        self.__hpassword = self.hash(password)
 
     def exists(self) -> bool:
         exists:bool = False
@@ -59,13 +59,13 @@ class Customer(DataObject):
         success:bool = False
         sql:str = 'INSERT INTO customer VALUES(NULL,?,?,?,?,?,?,?,?)'
 
-        if len(self.__hpassord) == 0: return 1
+        if len(self.__hpassword) == 0: return 1
         if self.exists(): return 2
 
         try:
             self.connect()
             if self.con and self.c:
-                self.c.execute(sql, (self.__email, self.__hpassord, self.fname, self.lname, self.__db_birth, self.__street_no, self.__zip_code, self.__city))
+                self.c.execute(sql, (self.__email, self.__hpassword, self.fname, self.lname, self.__db_birth, self.__street_no, self.__zip_code, self.__city))
                 self.con.commit()
                 success = True
         except Error as e: print(e)
@@ -83,3 +83,6 @@ class Customer(DataObject):
             'zipCode': self.__zip_code,
             'city': self.__city
         }
+    
+    def login(self, password:str) -> bool:
+        return self.hash(password) == self.__hpassword
