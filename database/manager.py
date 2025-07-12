@@ -23,9 +23,10 @@ class Manager(Data):
         return self.__items
     # endregion
     # region find-Methods
-    def get_customer(self, email:str) -> Customer|None:
+    def get_customer(self, email:str|int) -> Customer|None:
         customer:Customer|None = None
-        sql:str = 'SELECT * FROM customer WHERE cus_email = ?'
+        field = 'cus_id' if type(email) == int else 'cus_email'
+        sql:str = f'SELECT * FROM customer WHERE {field} = ?'
 
         try:
             self.connect()
