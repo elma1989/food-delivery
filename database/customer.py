@@ -1,6 +1,6 @@
 import hashlib
 from datetime import datetime
-from database import DataObject, Error
+from database import DataObject, Error, fkon
 
 class Customer(DataObject):
     # region properties
@@ -91,4 +91,22 @@ class Customer(DataObject):
     
     def login(self, password:str) -> bool:
         return self.hash(password) == self.__hpassword
+    
+    def delete(self) -> bool:
+        success:bool = False
+        sql:str = 'DELETE FROM customer WHERE cus_id = ?'
+
+        if not self.exists(): return False
+
+        try:
+            self.connect()
+            if self.con and self.c:
+                self.c.execute(fkon)
+                self.c.execute(sql,(self.customer_id,))
+                self.con.commit()
+                success = True
+        except Error as e: print(e)
+        finally: self.close()
+
+        return success
     # endregion

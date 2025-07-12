@@ -25,7 +25,7 @@ CREATE TABLE delivery (
 );
 
 CREATE TABLE delivery_item (
-    del_id INTEGER NOT NULL REFERENCES delivery(ord_id) ON DELETE CASCADE,
+    del_id INTEGER NOT NULL REFERENCES delivery(del_id) ON DELETE CASCADE,
     item_id INTEGER NOT NULL REFERENCES item(item_id),
     item_amount INTEGER NOT NULL,
     PRIMARY KEY (del_id, item_id)
