@@ -69,3 +69,21 @@ class Manager(Data):
         finally: self.close()
 
         return delivery
+    
+    def deliveries(self, customer:Customer) -> list[Delivery]:
+        deliveries = []
+        sql:str = 'SELECT * FROM delivery WHERE cus_id = ? ORDER BY del_time'
+
+        if not customer.exists(): return []
+
+        try:
+            self.connect()
+            if self.con and self.c:
+                self.c.execute(sql, (customer.customer_id,))
+                res = self.c.fetchall()
+                deliveries = [Delivery(customer, row[1], row[0]) for row in res]
+        except Error as e: print(e)
+        finally: self.close()
+
+        return deliveries
+    #endregion
