@@ -110,3 +110,4 @@ class Delivery(DataObject):
                 {'item': item[0].to_dict(), 'amount': item[1]} for item in items
             ]
         }
+    # endregion

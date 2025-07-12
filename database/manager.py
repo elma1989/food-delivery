@@ -1,8 +1,27 @@
 from database import Data, Error, Customer, Item, Delivery
 
 class Manager(Data):
+    #region properties
     def __init__(self):
         super().__init__()
+        self.__items:list[Item] = []
+
+    @property
+    def items(self) -> list[Item]:
+        sql:str = 'SELECT * FROM item ORDER by item_type, item_name'
+
+        if self.__items == []:
+            try:
+                self.connect()
+                if self.con and self.c:
+                    self.c.execute(sql)
+                    res = self.c.fetchall()
+                    self.__items = [Item(row[1], row[2], row[3], row[4], row[0]) for row in res]
+            except Error as e: print (e)
+            finally: self.close()
+
+        return self.__items
+    # endregion
     # region find-Methods
     def get_customer(self, email:str) -> Customer|None:
         customer:Customer|None = None
