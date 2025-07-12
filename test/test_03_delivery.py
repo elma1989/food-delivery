@@ -15,6 +15,7 @@ def test_add_exists():
 
     assert delivery1.exists()
     assert mgr.get_delivery(john, '2025-07-12 08:00')
+    assert delivery1.del_id == 1
 
 def test_items():
     mgr = Manager()
@@ -26,3 +27,42 @@ def test_items():
     assert delivery.items == []
     delivery.items = items
     assert delivery.items == [(margherita, 2), (salami, 1)]
+
+def test_to_dict():
+    mgr = Manager()
+    delivery = mgr.get_delivery(mgr.get_customer('john.doe@mail.de'), '2025-07-12 08:00')
+
+    assert delivery.to_dict() == {
+        'id': 1,
+        'time': '2025-07-12 08:00',
+        'customer': {
+            'id': 1,
+            'fname': 'John',
+            'lname': 'Doe',
+            'birthDate': '1990-01-01',
+            'street': 'Musterstr. 1',
+            'zipCode': '12345',
+            'city': 'Musterstadt'
+        },
+        'items': [
+            {
+                'amount': 2,
+                'item' : {
+                    'id': 1,
+                    'name': 'Pizza Margherita',
+                    'type': 'pizza',
+                    'desc': 'Pizza mit Mozerella und Tomate',
+                    'price': 4
+                }
+            }, {
+                'amount': 1,
+                'item' : {
+                    'id': 2,
+                    'name': 'Pizza Salami',
+                    'type': 'pizza',
+                    'desc': 'Pizza mit Salami',
+                    'price': 7
+                }
+            }
+        ]
+    }

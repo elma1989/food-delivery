@@ -101,4 +101,12 @@ class Delivery(DataObject):
         return 0 if success else 3
     
     def to_dict(self) -> dict:
-        return {}
+        items = self.items
+        return {
+            'id': self.del_id,
+            'customer': self.__customer.to_dict() if self.__customer else None,
+            'time': self.__time,
+            'items': [
+                {'item': item[0].to_dict(), 'amount': item[1]} for item in items
+            ]
+        }
