@@ -3,6 +3,7 @@ from sqlite3 import Error
 from .data import Data, DataObject
 from .customer import Customer
 from .item import Item
+from .delivery import Delivery
 from .manager import Manager
 
 def init_db():

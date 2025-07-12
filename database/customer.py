@@ -4,9 +4,9 @@ from database import DataObject, Error
 
 class Customer(DataObject):
     # region properties
-    def __init__(self,email:str, fname:str, lname:str, birth_date:str, street_no:str, zip_code:str, city:str, id:int=0, hpassword:str='') -> None:
+    def __init__(self,email:str, fname:str, lname:str, birth_date:str, street_no:str, zip_code:str, city:str, cus_id:int=0, hpassword:str='') -> None:
         super().__init__()
-        self.__id = id
+        self.__id = cus_id
         self.__email = email
         self.__hpassword = hpassword
         self.__fname = fname
@@ -16,6 +16,9 @@ class Customer(DataObject):
         self.__street_no = street_no
         self.__zip_code = zip_code
         self.__city = city
+
+    @property
+    def customer_id(self) -> int: return self.__id
 
     @property
     def fname(self) -> str: return self.__fname

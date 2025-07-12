@@ -2,13 +2,16 @@ from database import DataObject, Error
 
 class Item(DataObject):
     # region properties
-    def __init__(self, name:str, food_type:str, desc:str, price:float, id:int = 0):
+    def __init__(self, name:str, food_type:str, desc:str, price:float, item_id:int = 0):
         super().__init__()
-        self.__id = id
+        self.__id = item_id
         self.__name = name
         self.__food_type = food_type
         self.__desc = desc
         self.__price = price
+
+    @property
+    def item_id(self) -> int: return self.__id
 
     @property
     def name(self) -> str: return self.__name
