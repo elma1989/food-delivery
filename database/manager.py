@@ -1,10 +1,10 @@
-from database import Data, Error, Customer, Item, Delivery
+from database import Data, Error, Customer, Restaurant, Item, Delivery
 
 class Manager(Data):
     #region properties
     def __init__(self):
         super().__init__()
-        self.__items:list[Item] = []
+        self.__items = []
 
     @property
     def items(self) -> list[Item]:
@@ -37,6 +37,22 @@ class Manager(Data):
         finally: self.close()
 
         return customer
+    
+    def get_restaurant(self, name:str|int) -> Restaurant|None:
+        restaurant:Restaurant|None = None
+        input_type = 'res_id' if type(name) == int else 'res_name'
+        sql:str = f'SELECT * FROM restaurant WHERE {input_type} = ?'
+
+        try:
+            self.connect()
+            if self.con and self.c:
+                self.c.execute(sql,(name,))
+                res = self.c.fetchone()
+                if res: restaurant = Restaurant(res[1], res[2], res[0])
+        except Error as e: print(e)
+        finally: self.close()
+
+        return restaurant
     
     def get_item(self, name:str) -> Item|None:
         item:Item|None = None
