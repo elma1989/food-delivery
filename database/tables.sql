@@ -10,12 +10,20 @@ CREATE TABLE customer (
     cus_city VARCHAR(24) NOT NULL
 );
 
+CREATE TABLE restaurant (
+    res_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    res_name VARCHAR(30) NOT NULL UNIQUE,
+    res_review INTEGER NOT NULL
+);
+
 CREATE TABLE item (
     item_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     item_name TEXT NOT NULL UNIQUE,
     item_type VARCHAR(10) NOT NULL,
     item_description TEXT NOT NULL,
-    item_price DECIMAL(5,2) NOT NULL
+    item_price DECIMAL(5,2) NOT NULL,
+    item_review INTERGER NOT NULL,
+    res_id INTEGER NOT NULL REFERENCES restaurant(res_id)
 );
 
 CREATE TABLE delivery (

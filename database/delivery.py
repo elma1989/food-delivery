@@ -1,4 +1,4 @@
-from database import DataObject, Customer, Item, Error
+from database import DataObject, Customer, Restaurant, Item, Error
 
 class Delivery(DataObject):
     # region properties
@@ -9,7 +9,7 @@ class Delivery(DataObject):
         self.__time = time
         self.__items:list[tuple[Item, int]] = []
 
-    def __repr__(self) -> str: return f'{str(Customer)}: {self.__time}'
+    def __repr__(self) -> str: return f'{self.__customer.fname} {self.__customer.lname}: {self.__time}' if self.__customer else self.__time
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Delivery): return False
@@ -21,8 +21,8 @@ class Delivery(DataObject):
     @property
     def items(self) -> list[tuple[Item,int]]:
         sql:str = """
-            SELECT i.item_name, i.item_type, i.item_description, i.item_price, i.item_id, d.item_amount
-            FROM delivery_item d JOIN item i ON d.item_id = i.item_id
+            SELECT i.item_name, r.res_name, r.res_review, r.res_id, i.item_type, i.item_description, i.item_price, i.item_review, i.item_id, d.item_amount
+            FROM delivery_item d JOIN item i ON d.item_id = i.item_id JOIN restaurant r ON i.res_id = r.res_id
             WHERE d.del_id = ?
             ORDER BY i.item_name
             """
@@ -34,7 +34,7 @@ class Delivery(DataObject):
             if self.con and self.c:
                 self.c.execute(sql, (self.del_id,))
                 res = self.c.fetchall()
-                self.__items = [(Item(row[0], row[1], row[2], row[3], row[4]),row[5]) for row in res]
+                self.__items = [(Item(row[0], Restaurant(row[1], row[2], row[3]), row[4], row[5], row[6], row[7], row[8]),row[9]) for row in res]
         except Error as e: print(e)
         finally: self.close()
 

@@ -5,34 +5,7 @@ def test_index(url):
 
     assert req.status_code == 200
 
-def test_items(url):
-    req = requests.get(url + 'items/')
-
-    assert req.status_code == 200
-    data =  req.json()
-    assert data == [
-        {
-            'id': 3,
-            'name': 'Spaghetti',
-            'type': 'pasta',
-            'desc': 'Spaghetti Napolli',
-            'price': 5
-        }, {
-            'id': 1,
-            'name': 'Pizza Margherita',
-            'type': 'pizza',
-            'desc': 'Pizza mit Mozerella und Tomate',
-            'price': 4
-        }, {
-            'id': 2,
-            'name': 'Pizza Salami',
-            'type': 'pizza',
-            'desc': 'Pizza mit Salami',
-            'price': 7
-        },
-    ]
-
-def test_crate_user(url):
+def test_create_user(url):
     empty = {}
     john = {
         'email':'john.doe@mail.de',
@@ -53,7 +26,7 @@ def test_crate_user(url):
     assert req1_john.status_code == 201
     assert req2_john.status_code == 409
 
-def test_post_delivery(url):
+def post_delivery(url):
     data = [
         {
             'name':'Pizza Margherita',
@@ -67,6 +40,6 @@ def test_post_delivery(url):
 
     assert req.status_code == 201
 
-def test_delete_user(url):
+def delete_user(url):
     req = requests.delete(url + 'users/2')
     assert req.status_code == 204

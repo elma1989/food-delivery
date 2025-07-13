@@ -1,10 +1,10 @@
-from database import Data, Error, Customer, Item, Delivery
+from database import Data, Error, Customer, Restaurant, Item, Delivery
 
 class Manager(Data):
     #region properties
     def __init__(self):
         super().__init__()
-        self.__items:list[Item] = []
+        self.__items = []
 
     @property
     def items(self) -> list[Item]:
@@ -16,7 +16,7 @@ class Manager(Data):
                 if self.con and self.c:
                     self.c.execute(sql)
                     res = self.c.fetchall()
-                    self.__items = [Item(row[1], row[2], row[3], row[4], row[0]) for row in res]
+                    self.__items = [Item(row[1],self.get_restaurant(row[6]), row[2], row[3], row[4], row[5], row[0]) for row in res]
             except Error as e: print (e)
             finally: self.close()
 
@@ -39,6 +39,22 @@ class Manager(Data):
 
         return customer
     
+    def get_restaurant(self, name:str|int) -> Restaurant|None:
+        restaurant:Restaurant|None = None
+        input_type = 'res_id' if type(name) == int else 'res_name'
+        sql:str = f'SELECT * FROM restaurant WHERE {input_type} = ?'
+
+        try:
+            self.connect()
+            if self.con and self.c:
+                self.c.execute(sql,(name,))
+                res = self.c.fetchone()
+                if res: restaurant = Restaurant(res[1], res[2], res[0])
+        except Error as e: print(e)
+        finally: self.close()
+
+        return restaurant
+    
     def get_item(self, name:str) -> Item|None:
         item:Item|None = None
         sql:str = 'SELECT * FROM item WHERE item_name = ?'
@@ -48,7 +64,7 @@ class Manager(Data):
             if self.con and self.c:
                 self.c.execute(sql, (name, ))
                 res = self.c.fetchone()
-                if res: item = Item(res[1], res[2], res[3], res[4], res[0])
+                if res: item = Item(res[1], self.get_restaurant(res[6]), res[2], res[3], res[4], res[5], res[0])
         except Error as e: print(e)
         finally: self.close()
 

@@ -11,7 +11,7 @@ def index():
     return render_template('index.html')
 
 @api.route('/items/')
-@jwt_required()
+# @jwt_required()
 def items():
     mgr = Manager()
     items = mgr.items
@@ -62,7 +62,7 @@ def login():
     }
 
 @api.route('/users/<int:user_id>', methods=['DELETE'])
-@jwt_required
+# @jwt_required
 def delete_user(user_id):
     mgr = Manager()
     customer = mgr.get_customer(user_id)
@@ -74,7 +74,7 @@ def delete_user(user_id):
     return '', 204
 
 @api.route('/users/<int:user_id>/deliveries', methods=['GET', 'POST'])
-@jwt_required()
+# @jwt_required()
 def deliveries(user_id):
     mgr = Manager()
     customer = mgr.get_customer(user_id)

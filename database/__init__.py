@@ -5,6 +5,7 @@ fkon = 'PRAGMA foreign_keys = ON'
 from sqlite3 import Error
 from .data import Data, DataObject
 from .customer import Customer
+from .restaurant import Restaurant
 from .item import Item
 from .delivery import Delivery
 from .manager import Manager
