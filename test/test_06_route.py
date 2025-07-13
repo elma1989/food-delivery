@@ -52,3 +52,17 @@ def test_crate_user(url):
     assert req_empty.status_code == 400
     assert req1_john.status_code == 201
     assert req2_john.status_code == 409
+
+def test_post_delivery(url):
+    data = [
+        {
+            'name':'Pizza Margherita',
+            'amount':2
+        }, {
+            'name':'Pizza Salami',
+            'amount':1
+        }
+    ]
+    req = requests.post(url + '/users/2/deliveries', json.dumps(data))
+
+    assert req.status_code == 200

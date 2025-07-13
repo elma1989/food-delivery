@@ -1,7 +1,8 @@
 import json
+from datetime import datetime
 from flask import Blueprint, render_template, request
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
-from database import Manager, Customer
+from flask_jwt_extended import create_access_token, jwt_required
+from database import Manager, Customer, Delivery
 
 api = Blueprint('api',__name__)
 
@@ -15,7 +16,7 @@ def items():
     mgr = Manager()
     items = mgr.items
     return [item.to_dict() for item in items]
-
+# region User
 @api.route('/users/', methods=['POST'])
 def create_user():
     data = json.loads(request.data.decode())
@@ -53,7 +54,31 @@ def login():
 
     if not customer or not customer.login(password): return {'message':'User or Password not correct'}, 403
 
-    access_token = create_access_token(identity=str(customer.customer_id))
-    refresh_token = create_refresh_token(identity=customer.customer_id)
+    access_token = create_access_token()
 
-    return {'token':access_token}
+    return {
+        'token':access_token,
+        'userId':customer.customer_id
+    }
+
+@api.route('/users/<int:user_id>/deliveries', methods=['GET', 'POST'])
+# @jwt_required()
+def deliveries(user_id):
+    mgr = Manager()
+    customer = mgr.get_customer(user_id)
+
+    if not customer: return {'message':'User or Password not correct'}, 403
+
+    if request.method == 'POST':
+        items_dict = json.loads(request.data)
+        items = [(mgr.get_item(item['name']), item['amount']) for item in items_dict]
+        time = datetime.now()
+        delivery = Delivery(customer, time.strftime('%Y-%m-%d %H:%M'))
+        delivery.add()
+        delivery.exists()
+        delivery.items = items
+
+    deliveries = mgr.deliveries(customer)
+
+    return [delivery.to_dict() for delivery in deliveries]
+# endregion
