@@ -63,6 +63,10 @@ def test_post_delivery(url):
             'amount':1
         }
     ]
-    req = requests.post(url + '/users/2/deliveries', json.dumps(data))
+    req = requests.post(url + 'users/2/deliveries', json.dumps(data))
 
-    assert req.status_code == 200
+    assert req.status_code == 201
+
+def test_delete_user(url):
+    req = requests.delete(url + 'users/2')
+    assert req.status_code == 204

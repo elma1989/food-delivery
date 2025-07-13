@@ -11,7 +11,7 @@ def index():
     return render_template('index.html')
 
 @api.route('/items/')
-# @jwt_required()
+@jwt_required()
 def items():
     mgr = Manager()
     items = mgr.items
@@ -61,8 +61,20 @@ def login():
         'userId':customer.customer_id
     }
 
+@api.route('/users/<int:user_id>', methods=['DELETE'])
+@jwt_required
+def delete_user(user_id):
+    mgr = Manager()
+    customer = mgr.get_customer(user_id)
+
+    if not customer: return {'message':'User or Password not correct'}, 403
+
+    customer.delete()
+
+    return '', 204
+
 @api.route('/users/<int:user_id>/deliveries', methods=['GET', 'POST'])
-# @jwt_required()
+@jwt_required()
 def deliveries(user_id):
     mgr = Manager()
     customer = mgr.get_customer(user_id)
@@ -77,6 +89,7 @@ def deliveries(user_id):
         delivery.add()
         delivery.exists()
         delivery.items = items
+        return {'message':'Deliery crated'}, 201
 
     deliveries = mgr.deliveries(customer)
 
