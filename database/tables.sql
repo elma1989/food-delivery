@@ -22,6 +22,7 @@ CREATE TABLE item (
     item_type VARCHAR(10) NOT NULL,
     item_description TEXT NOT NULL,
     item_price DECIMAL(5,2) NOT NULL,
+    item_review INTERGER NOT NULL,
     res_id INTEGER NOT NULL REFERENCES restaurant(res_id)
 );
 

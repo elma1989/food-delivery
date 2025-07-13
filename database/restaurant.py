@@ -50,4 +50,8 @@ class Restaurant(DataObject):
         return 0 if success else 3
 
     def to_dict(self) -> dict:
-        return {}
+        return {
+            'id':self.res_id,
+            'name': self.__name,
+            'review': self.__review
+        }

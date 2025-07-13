@@ -16,7 +16,7 @@ class Manager(Data):
                 if self.con and self.c:
                     self.c.execute(sql)
                     res = self.c.fetchall()
-                    self.__items = [Item(row[1], row[2], row[3], row[4], row[0]) for row in res]
+                    self.__items = [Item(row[1],self.get_restaurant(row[6]), row[2], row[3], row[4], row[5], row[0]) for row in res]
             except Error as e: print (e)
             finally: self.close()
 
@@ -63,7 +63,7 @@ class Manager(Data):
             if self.con and self.c:
                 self.c.execute(sql, (name, ))
                 res = self.c.fetchone()
-                if res: item = Item(res[1], res[2], res[3], res[4], res[0])
+                if res: item = Item(res[1], self.get_restaurant(res[6]), res[2], res[3], res[4], res[5], res[0])
         except Error as e: print(e)
         finally: self.close()
 
