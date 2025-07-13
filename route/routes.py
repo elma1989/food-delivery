@@ -1,5 +1,6 @@
 import json
 from flask import Blueprint, render_template, request
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required
 from database import Manager, Customer
 
 api = Blueprint('api',__name__)
@@ -9,6 +10,7 @@ def index():
     return render_template('index.html')
 
 @api.route('/items/')
+# @jwt_required()
 def items():
     mgr = Manager()
     items = mgr.items
@@ -37,3 +39,21 @@ def create_user():
     if res == 1: return {'message':'Data invalid'}, 400
     if res == 2: return {'message': 'User allready exists'}, 409
     return {'message':'User created'}, 201
+
+@api.route('/users/login', methods=['POST'])
+def login():
+    data = json.loads(request.data.decode())
+    email = data.get('email')
+    password = data.get('password')
+
+    if not email or not password: return {'message':'Missing data'}, 400
+
+    mgr = Manager()
+    customer = mgr.get_customer(email)
+
+    if not customer or not customer.login(password): return {'message':'User or Password not correct'}, 403
+
+    access_token = create_access_token(identity=str(customer.customer_id))
+    refresh_token = create_refresh_token(identity=customer.customer_id)
+
+    return {'token':access_token}
