@@ -34,14 +34,20 @@ class Restaurant(DataObject):
     
     def add(self) -> int:
         success:bool = False
-        sql:str = 'INSERT INTO restaurant VALUES(NULL, ?, ?)'
+        sql:list[str] = [
+            'INSERT INTO restaurant VALUES(NULL, ?, ?)',
+            'SELECT res_id FROM restaurant WHERE res_name = ?'
+        ]
 
         if self.exists(): return 2
 
         try:
             self.connect()
             if self.con and self.c:
-                self.c.execute(sql,(self.__name, self.__review))
+                self.c.execute(sql[0],(self.__name, self.__review))
+                self.c.execute(sql[1],(self.__name,))
+                res = self.c.fetchone()
+                if res: self.__res_id = res[0]
                 self.con.commit()
                 success = True
         except Error as e: print(e)
