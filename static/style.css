@@ -7,3 +7,31 @@
     scroll-behavior: smooth;
     position: relative;
 }
+
+html {
+    font-size: 10px;
+}
+
+header, footer, main {
+    display: flex;
+    justify-content: center;
+    .content {
+        width: 100%;
+        max-width: 1920px;
+        padding: 0 clamp(16px, 11dvw, 160px);
+    }
+}
+
+header, footer {
+    background: #ff8000;
+    height: 100%;
+    height: 10dvh;
+}
+
+header img {
+    height: 100%;
+}
+
+main {
+    min-height: 80dvh;
+}
