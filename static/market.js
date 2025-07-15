@@ -4,6 +4,7 @@ export class Market {
     refMain = document.querySelector('main .content');
     // #endregion
     // #region Methods
+    //  #region Render
     renderNav(user) {
         const refNav = document.querySelector('nav ul');
         refNav.innerHTML = '';
@@ -31,8 +32,8 @@ export class Market {
     renderRegister () {
         const fieldset = document.querySelector('fieldset');
         fieldset.innerHTML += Template.forminput('E-Mail' ,'mail');
-        fieldset.innerHTML += Template.forminput('Passort','password');
-        fieldset.innerHTML += Template.forminput('Passwort whd', 'password2');
+        fieldset.innerHTML += Template.forminput('Passort','password','password');
+        fieldset.innerHTML += Template.forminput('Passwort whd', 'password2','password');
         fieldset.innerHTML += Template.forminput('Straße, Nr','street');
         fieldset.innerHTML += Template.forminput('PLZ', 'zipCode');
         fieldset.innerHTML += Template.forminput('Stadt', 'city');
@@ -40,6 +41,14 @@ export class Market {
 
     }
 
+    renderLogin () {
+        const fieldset = document.querySelector('fieldset');
+        fieldset.innerHTML += Template.forminput('E-Mail' ,'mail');
+        fieldset.innerHTML += Template.forminput('Passort','password','password');
+        fieldset.innerHTML += Template.formsubmit('Einloggen');
+    }
+    // #endregion
+    // #region Events
     addNavEvents (user) {
         const refNavBtns = document.querySelectorAll('nav ul li button');
         refNavBtns[0].addEventListener('click', e => {
@@ -47,6 +56,7 @@ export class Market {
                 btn.classList.remove('nav-btn-active');
                 this.renderForm('Registrieren');
                 this.renderRegister();
+                this.addSubmitEvent(0);
             });
             e.currentTarget.classList.add('nav-btn-active');
         });
@@ -54,9 +64,46 @@ export class Market {
             refNavBtns.forEach(btn => {
                 btn.classList.remove('nav-btn-active');
                 this.renderForm('Anmelden');
+                this.renderLogin();
+                this.addSubmitEvent(1);
             });
             e.currentTarget.classList.add('nav-btn-active');
         });
     }
+
+    addSubmitEvent(form) {
+        document.forms[0].addEventListener('submit', e => {
+            e.preventDefault();
+            if (form == 0) {
+                this.readRegisterInput();
+            } else {
+                this.readLoginInput();
+            }
+        });
+    }
+    // #endregion
+    // #region UserInput
+    readRegisterInput() {
+        const refInputs = document.querySelectorAll('input');        
+        const userIputs =  {
+            mail: refInputs[0].value,
+            password: refInputs[1].value,
+            password2: refInputs[2].value,
+            street: refInputs[3].value,
+            zipCode: refInputs[4].value,
+            city: refInputs[5].value
+        }
+        console.log(userIputs);
+    }
+
+    readLoginInput() {
+        const refInputs = document.querySelectorAll('input');        
+        const userIputs =  {
+            mail: refInputs[0].value,
+            password: refInputs[1].value
+        }
+        console.log(userIputs);
+    }
+    // #endregion
     // #endregion
 }

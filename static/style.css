@@ -103,7 +103,7 @@ form {
             label {
                 display: flex;
             }
-            input[type=text] {
+            input[type=text], input[type=password] {
                 padding: 8px;
                 color: #ff8000;
                 font-size: clamp(16px, 1.5dvw, 32px);
@@ -112,7 +112,7 @@ form {
                 border-radius: 8px;
                 outline: none;
             }
-            input[type=text]:focus {
+            input[type=text]:focus, input[type=password]:focus {
                 background: #ffc080;
             }
         }

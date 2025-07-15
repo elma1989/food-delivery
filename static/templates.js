@@ -22,11 +22,11 @@ export class Template{
         `
     }
 
-    static forminput(name, id) {
+    static forminput(name, id, type='text') {
         return /*html*/`
             <div class="formdata">
                 <label for="${id}">${name}: </label>
-                <input type="text" name="${id}" id="${id}">
+                <input type="${type}" name="${id}" id="${id}">
                 <div class="errmg"></div>
             </div>
         `
