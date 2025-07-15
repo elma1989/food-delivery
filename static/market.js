@@ -13,5 +13,16 @@ export class Market {
         }
 
     }
+
+    renderMain (user) {
+        const refMain = document.querySelector('main .content');
+        refMain.innerHTML = ''
+        if (user.login) {
+
+        } else {
+            refMain.innerHTML = Template.greating();
+            refMain.classList.add('vc-box');
+        }
+    }
     // #endregion
 }

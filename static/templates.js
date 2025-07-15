@@ -5,5 +5,11 @@ export class Template{
             <li><button>${desc}</button></li>
         `
     }
+
+    static greating() {
+        return /*html*/`
+            <h1>Herzlich Willkommen in der Bestell-App.</h1>
+        `
+    }
     // #endrgion
 }

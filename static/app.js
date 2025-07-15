@@ -5,3 +5,4 @@ const currentUser = new User();
 const market = new Market();
 
 market.renderNav(currentUser);
+market.renderMain(currentUser);
