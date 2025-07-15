@@ -11,5 +11,15 @@ export class Template{
             <h1>Herzlich Willkommen in der Bestell-App.</h1>
         `
     }
+    
+    static form(name) {
+        return /*html*/`
+            <form>
+                <fieldset>
+                    <legend>${name}</legend>
+                </fieldset>
+            </form>
+        `
+    }
     // #endrgion
 }

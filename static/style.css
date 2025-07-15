@@ -65,7 +65,7 @@ header{
                     background: #ffffff;
                     color: #ff8000;
                 }
-                button:hover {
+                button:hover, .nav-btn-active {
                     border-color: #ffffff;
                     background: #ff8000;
                     color: #ffffff;

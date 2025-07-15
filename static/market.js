@@ -1,5 +1,8 @@
 import { Template } from "./templates.js";
 export class Market {
+    // #region attributes
+    refMain = document.querySelector('main .content');
+    // #endregion
     // #region Methods
     renderNav(user) {
         const refNav = document.querySelector('nav ul');
@@ -14,15 +17,31 @@ export class Market {
 
     }
 
-    renderMain (user) {
-        const refMain = document.querySelector('main .content');
-        refMain.innerHTML = ''
-        if (user.login) {
+    renderMain () {
+        this.refMain.innerHTML = ''
+        
+        this.refMain.innerHTML = Template.greating();
+        this.refMain.classList.add('vc-box');
+    }
 
-        } else {
-            refMain.innerHTML = Template.greating();
-            refMain.classList.add('vc-box');
-        }
+    renderRegister () {
+        console.log('register');
+    }
+
+    addNavEvents (user) {
+        const refNavBtns = document.querySelectorAll('nav ul li button');
+        refNavBtns[0].addEventListener('click', e => {
+            refNavBtns.forEach(btn => {
+                btn.classList.remove('nav-btn-active');
+            });
+            e.currentTarget.classList.add('nav-btn-active');
+        });
+        refNavBtns[1].addEventListener('click', e => {
+            refNavBtns.forEach(btn => {
+                btn.classList.remove('nav-btn-active');
+            });
+            e.currentTarget.classList.add('nav-btn-active');
+        });
     }
     // #endregion
 }
