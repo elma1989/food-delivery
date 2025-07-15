@@ -1,3 +1,14 @@
+@font-face {
+    font-family: Raleway;
+    src: url(assets/fonts/Raleway-Regular.ttf);
+}
+
+@font-face {
+    font-family: Raleway;
+    src: url(assets/fonts/Raleway-Bold.ttf);
+    font-weight: bold;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +23,9 @@ html {
     font-size: 10px;
 }
 
+body {
+    font-family: Raleway;
+}
 
 header, footer, main {
     display: flex;
@@ -67,4 +81,15 @@ main {
         display: flex;
         justify-content: center;
     }
+}
+
+h1 {
+    font-size: 4.8rem;
+    color: #ff8000;
+}
+
+.vc-box {
+    display: flex;
+    align-items: center;
+    vertical-align: center;
 }
