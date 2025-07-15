@@ -12,6 +12,7 @@ html {
     font-size: 10px;
 }
 
+
 header, footer, main {
     display: flex;
     justify-content: center;
@@ -28,10 +29,42 @@ header, footer {
     height: 10dvh;
 }
 
-header img {
-    height: 100%;
+header{
+    .content {
+        display: flex;
+        height: 100%;
+        justify-content: space-between;
+        img{
+            height: 100%
+        }
+        nav {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            ul {
+                display: flex;
+                gap: 16px;
+                button {
+                    padding: 8px;
+                    border-radius: 8px;
+                    border: 1px solid #ff8000;
+                    background: #ffffff;
+                    color: #ff8000;
+                }
+                button:hover {
+                    border-color: #ffffff;
+                    background: #ff8000;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
 }
 
 main {
     min-height: 80dvh;
+    .content {
+        display: flex;
+        justify-content: center;
+    }
 }
