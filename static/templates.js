@@ -21,5 +21,22 @@ export class Template{
             </form>
         `
     }
+
+    static forminput(name, id) {
+        return /*html*/`
+            <div class="formdata">
+                <label for="${id}">${name}: </label>
+                <input type="text" name="${id}" id="${id}">
+            </div>
+        `
+    }
+
+    static formsubmit(submitname) {
+        return /*html*/`
+            <div class="formsumbit">
+                <input type="submit" value="${submitname}">
+            </div>
+        `
+    }
     // #endrgion
 }
