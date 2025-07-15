@@ -1,15 +1,21 @@
-import { Template } from "./templates.js";
+import { User } from './user.js';
+import { Template } from './templates.js';
 export class Market {
     // #region attributes
     refMain = document.querySelector('main .content');
+    url = 'http://localhost:5000/';
+    currentUser = null;
     // #endregion
+    constructor() {
+        this.currentUser = new User(this.url);
+    }
     // #region Methods
     //  #region Render
     renderNav(user) {
         const refNav = document.querySelector('nav ul');
         refNav.innerHTML = '';
 
-        if (user.login) {
+        if (this.currentUser.login) {
 
         } else {
             refNav.innerHTML += Template.li('Registr');
@@ -32,8 +38,11 @@ export class Market {
     renderRegister () {
         const fieldset = document.querySelector('fieldset');
         fieldset.innerHTML += Template.forminput('E-Mail' ,'mail');
-        fieldset.innerHTML += Template.forminput('Passort','password','password');
-        fieldset.innerHTML += Template.forminput('Passwort whd', 'password2','password');
+        fieldset.innerHTML += Template.forminput('Passwort','password','password');
+        fieldset.innerHTML += Template.forminput('Passwort wdh', 'password2','password');
+        fieldset.innerHTML += Template.forminput('Vorname', 'fname');
+        fieldset.innerHTML += Template.forminput('Nachname', 'lname');
+        fieldset.innerHTML += Template.forminput('Geburtdatum', 'birthDate', 'date');
         fieldset.innerHTML += Template.forminput('Straße, Nr','street');
         fieldset.innerHTML += Template.forminput('PLZ', 'zipCode');
         fieldset.innerHTML += Template.forminput('Stadt', 'city');
@@ -49,7 +58,7 @@ export class Market {
     }
     // #endregion
     // #region Events
-    addNavEvents (user) {
+    addNavEvents () {
         const refNavBtns = document.querySelectorAll('nav ul li button');
         refNavBtns[0].addEventListener('click', e => {
             refNavBtns.forEach(btn => {
@@ -85,21 +94,26 @@ export class Market {
     // #region UserInput
     readRegisterInput() {
         const refInputs = document.querySelectorAll('input');        
-        const userIputs =  {
-            mail: refInputs[0].value,
+        const userInput =  {
+            email: refInputs[0].value,
             password: refInputs[1].value,
             password2: refInputs[2].value,
-            street: refInputs[3].value,
-            zipCode: refInputs[4].value,
-            city: refInputs[5].value
+            fname: refInputs[3].value,
+            lname: refInputs[4].value,
+            birthDate: refInputs[5].value,
+            street: refInputs[6].value,
+            zipCode: refInputs[7].value,
+            city: refInputs[8].value
         }
-        console.log(this.validate(userIputs));
+        if(this.validate(userInput)) {
+            this.currentUser.register(userInput);
+        } 
     }
 
     readLoginInput() {
         const refInputs = document.querySelectorAll('input');        
         const userIputs =  {
-            mail: refInputs[0].value,
+            email: refInputs[0].value,
             password: refInputs[1].value
         }
         console.log(userIputs);
@@ -109,11 +123,12 @@ export class Market {
         let valid = true;
         const refErrmsg = document.querySelectorAll('.errmsg');
         const regexEmail = /\w+?(\.|_|-)?\w+@\w+\.\w+/i
-        const regexStreet = /[A-Z][a-z]+\.?\s[0-9][a-z]?/g
+        const regexName = /[A-Z][a-z]+/
+        const regexStreet = /[A-Z][a-z-]+\.?\s[0-9][a-z]?/g
         const regexZipCode = /[0-9]{5,5}/
         const regexCity = /[A-Z][a-z]+/
 
-        if (!regexEmail.test(userInput.mail)) {
+        if (!regexEmail.test(userInput.email)) {
             refErrmsg[0].textContent = 'E-Mail ist nicht korrekt!';
             valid = false;
         }
@@ -125,16 +140,23 @@ export class Market {
             refErrmsg[2].textContent = 'Passwort stimmt nicht überein!';
             valid = false;
         }
+        if (!regexName.test(userInput.fname)) {
+            refErrmsg[3].textContent = 'Vorname ist nicht Korrekt!';
+            valid = false;
+        }
+        if (!regexName.test(userInput.lname)) {
+            refErrmsg[4].textContent = 'Nachname ist nicht korrekt!';
+        }
         if (!regexStreet.test(userInput.street)) {
-            refErrmsg[3].textContent = 'Straßenname ist nicht korrekt!';
+            refErrmsg[6].textContent = 'Straßenname ist nicht korrekt!';
             valid = false;
         }
         if (!regexZipCode.test(userInput.zipCode)) {
-            refErrmsg[4].textContent = 'PLZ ist nicht korrekt!';
+            refErrmsg[7].textContent = 'PLZ ist nicht korrekt!';
             valid = false
         }
         if (!regexCity.test(userInput.city)) {
-            refErrmsg[5].textContent = 'Stadtname ist nicht korrekt';
+            refErrmsg[8].textContent = 'Stadtname ist nicht korrekt';
             valid = false;
         }
         return valid;

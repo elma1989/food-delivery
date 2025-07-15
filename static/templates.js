@@ -19,6 +19,7 @@ export class Template{
                     <legend>${name}</legend>
                 </fieldset>
             </form>
+            <div class="status-msg"></div>
         `
     }
 
