@@ -93,7 +93,7 @@ export class Market {
             zipCode: refInputs[4].value,
             city: refInputs[5].value
         }
-        console.log(userIputs);
+        console.log(this.validate(userIputs));
     }
 
     readLoginInput() {
@@ -104,6 +104,41 @@ export class Market {
         }
         console.log(userIputs);
     }
+
+    validate(userInput) {
+        let valid = true;
+        const refErrmsg = document.querySelectorAll('.errmsg');
+        const regexEmail = /\w+?(\.|_|-)?\w+@\w+\.\w+/i
+        const regexStreet = /[A-Z][a-z]+\.?\s[0-9][a-z]?/g
+        const regexZipCode = /[0-9]{5,5}/
+        const regexCity = /[A-Z][a-z]+/
+
+        if (!regexEmail.test(userInput.mail)) {
+            refErrmsg[0].textContent = 'E-Mail ist nicht korrekt!';
+            valid = false;
+        }
+        if (userInput.password.length < 5) {
+            refErrmsg[1].textContent = 'Passwort muss mindestens 5 Zeichen haben!';
+            valid = false;
+        }
+        if (userInput.password != userInput.password2) {
+            refErrmsg[2].textContent = 'Passwort stimmt nicht überein!';
+            valid = false;
+        }
+        if (!regexStreet.test(userInput.street)) {
+            refErrmsg[3].textContent = 'Straßenname ist nicht korrekt!';
+            valid = false;
+        }
+        if (!regexZipCode.test(userInput.zipCode)) {
+            refErrmsg[4].textContent = 'PLZ ist nicht korrekt!';
+            valid = false
+        }
+        if (!regexCity.test(userInput.city)) {
+            refErrmsg[5].textContent = 'Stadtname ist nicht korrekt';
+            valid = false;
+        }
+        return valid;
+    }  
     // #endregion
     // #endregion
 }

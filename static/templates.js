@@ -27,7 +27,7 @@ export class Template{
             <div class="formdata">
                 <label for="${id}">${name}: </label>
                 <input type="${type}" name="${id}" id="${id}">
-                <div class="errmg"></div>
+                <div class="errmsg"></div>
             </div>
         `
     }
