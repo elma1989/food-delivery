@@ -64,6 +64,7 @@ header{
                     border: 1px solid #ff8000;
                     background: #ffffff;
                     color: #ff8000;
+                    cursor: pointer;
                 }
                 button:hover, .nav-btn-active {
                     border-color: #ffffff;
@@ -86,6 +87,48 @@ main {
 h1 {
     font-size: 4.8rem;
     color: #ff8000;
+}
+
+form {
+    font-size: clamp(16px, 1.5dvw, 32px);
+    color: #ff8000;
+    fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        border: 3px solid #ff8000;
+        padding: 16px;
+        border-radius: 8px;
+        .formdata {
+            label {
+                display: flex;
+            }
+            input[type=text] {
+                padding: 8px;
+                color: #ff8000;
+                font-size: clamp(16px, 1.5dvw, 32px);
+                border: none;
+                border-bottom: 1px solid #ff8000;
+                border-radius: 8px;
+                outline: none;
+            }
+            input[type=text]:focus {
+                background: #ffc080;
+            }
+        }
+        .formsubmit {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
+            input[type=submit] {
+                padding: 8px;
+                background: #ff8000;
+                color: #ffffff;
+                border:none;
+                border-radius: 8px;
+            }
+        }
+    }
 }
 
 .vc-box {

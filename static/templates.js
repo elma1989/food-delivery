@@ -27,13 +27,14 @@ export class Template{
             <div class="formdata">
                 <label for="${id}">${name}: </label>
                 <input type="text" name="${id}" id="${id}">
+                <div class="errmg"></div>
             </div>
         `
     }
 
     static formsubmit(submitname) {
         return /*html*/`
-            <div class="formsumbit">
+            <div class="formsubmit">
                 <input type="submit" value="${submitname}">
             </div>
         `
