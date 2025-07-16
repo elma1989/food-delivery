@@ -39,15 +39,17 @@ export class User {
             },
             body: JSON.stringify(logdata)
         });
-        if (!response.ok) {
+        if (response.ok) {
+            const data = await response.json();
+            this.id = data.id;
+            this.token = data.token;
+            this.login = true;
+            market.renderNav();
+            market.loadDishes();    
+        } else {
             refMsg.classList.remove('success');
             refMsg.textContent = 'E-Mail oder Passwort ist nicht korrekt!';
         }
-        const data = await response.json();
-        this.id = data.id;
-        this.token = data.token;
-        this.login = true;
-        market.loadDishes();
     }
     // #endregion
 }

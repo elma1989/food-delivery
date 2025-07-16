@@ -1,4 +1,5 @@
 import { User } from './user.js';
+import { Shelf } from './shelf.js';
 import { Template } from './templates.js';
 export class Market {
     // #region attributes
@@ -8,6 +9,12 @@ export class Market {
     // #endregion
     constructor() {
         this.currentUser = new User(this.url);
+        this.shelves = [
+            new Shelf('Burger', 'burger'),
+            new Shelf ('Nudelgerichte', 'noodle'),
+            new Shelf ('Pizzen', 'pizza'),
+            new Shelf ('Sushi', 'sushi')
+        ]
     }
     // #region Methods
     //  #region Render
@@ -16,7 +23,7 @@ export class Market {
         refNav.innerHTML = '';
 
         if (this.currentUser.login) {
-
+            refNav.innerHTML += Template.li('Logout');
         } else {
             refNav.innerHTML += Template.li('Registr');
             refNav.innerHTML += Template.li('Login');
@@ -58,7 +65,10 @@ export class Market {
     }
 
     renderShelves () {
-        console.log('Regale');
+        this.refMain.innerHTML = '';
+        this.shelves.forEach(shelf => {
+            this.refMain.innerHTML += Template.shelf(shelf.name, shelf.img);
+        });
     }
 
     // #endregion

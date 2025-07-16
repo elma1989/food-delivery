@@ -1,0 +1,16 @@
+.shelf {
+    padding: 16px 0;
+    header {
+        background: transparent;
+        display: block;
+        color: #ff8000;
+        height: auto;
+        h2 {
+            margin-bottom: 8px;
+        }
+        img {
+            width: 100%;
+            height: 150px;
+        }
+    }
+}

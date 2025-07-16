@@ -40,5 +40,17 @@ export class Template{
             </div>
         `
     }
+
+    static shelf (name, img) {
+        return /*html*/`
+            <section class="shelf">
+                <header>
+                    <h2>${name}</h2>
+                    <img src="static/assets/img/${img}.svg">
+                </header>
+                <div class="dish-wrapper"></div>
+            </section>
+        `
+    }
     // #endrgion
 }
