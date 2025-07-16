@@ -1,5 +1,6 @@
 import { User } from './user.js';
 import { Shelf } from './shelf.js';
+import { Dish } from './dish.js';
 import { Template } from './templates.js';
 export class Market {
     // #region attributes
@@ -179,7 +180,22 @@ export class Market {
     // #endregion
     // #region Requests
     async loadDishes() {
-        console.log(this.currentUser);
+        const auth = `Bearer ${this.currentUser.token}`;
+        const response = await fetch(this.url + 'items/', {
+            headers: {
+                "Authorization": auth
+            }
+        });
+        if (response.ok) {
+            const dishes = await response.json();
+            dishes.forEach (dish => {
+                if (dish.type == 'Burger') this.shelves[0].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.restaurant.name, dish.restaurant.review));
+                if (dish.type == 'Pasta') this.shelves[1].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.restaurant.name, dish.restaurant.review));
+                if (dish.type == 'Pizza') this.shelves[2].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.restaurant.name, dish.restaurant.review));
+                if (dish.type == 'Sushi') this.shelves[3].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.restaurant.name, dish.restaurant.review));
+            });
+            console.log(this.shelves);
+        }
     }
     // #endregion
     // #endregion
