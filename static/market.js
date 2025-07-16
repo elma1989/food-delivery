@@ -53,9 +53,14 @@ export class Market {
     renderLogin () {
         const fieldset = document.querySelector('fieldset');
         fieldset.innerHTML += Template.forminput('E-Mail' ,'mail');
-        fieldset.innerHTML += Template.forminput('Passort','password','password');
+        fieldset.innerHTML += Template.forminput('Passwort','password','password');
         fieldset.innerHTML += Template.formsubmit('Einloggen');
     }
+
+    renderShelves () {
+        console.log('Regale');
+    }
+
     // #endregion
     // #region Events
     addNavEvents () {
@@ -112,11 +117,11 @@ export class Market {
 
     readLoginInput() {
         const refInputs = document.querySelectorAll('input');        
-        const userIputs =  {
+        const userInput =  {
             email: refInputs[0].value,
             password: refInputs[1].value
         }
-        console.log(userIputs);
+        this.currentUser.singon(userInput, this);
     }
 
     validate(userInput) {
@@ -161,6 +166,11 @@ export class Market {
         }
         return valid;
     }  
+    // #endregion
+    // #region Requests
+    async loadDishes() {
+        console.log(this.currentUser);
+    }
     // #endregion
     // #endregion
 }

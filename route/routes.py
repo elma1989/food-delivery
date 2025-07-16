@@ -54,7 +54,7 @@ def login():
 
     if not customer or not customer.login(password): return {'message':'User or Password not correct'}, 403
 
-    access_token = create_access_token()
+    access_token = create_access_token(identity=email)
 
     return {
         'token':access_token,
