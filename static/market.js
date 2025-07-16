@@ -125,7 +125,6 @@ export class Market {
         for (let i = 0, k = 0; i < this.shelves.length; i++) {
             for (let j = 0; j < this.shelves[i].dishes.length; j++, k++) {
                 addBtns[k].addEventListener('click', () => {
-                    console.log(`shelf: ${i} dish: ${j}`);
                     this.cart.addItem(this.shelves[i].dishes[j]);
                 });
             }
