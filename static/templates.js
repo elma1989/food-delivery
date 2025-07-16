@@ -62,8 +62,10 @@ export class Template{
                 </div>
                 <div class="dish-desc">
                     <h3>${dish.dishName}</h3>
-                    <span>${dish.desc}</span>
+                    <span class="desc">${dish.desc}</span>
                     <h4>${dish.restaurantName}</h4>
+                    <span class="price">${dish.currency()}</span>
+                    <button class="add-btn">+</button>
                 </div>
             </div>
         `

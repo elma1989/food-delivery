@@ -9,4 +9,7 @@ export class Dish {
         this.restaurantReview = restauentReview;
         this.restId = restId;
     }
+    currency () {
+        return new Intl.NumberFormat('DE-de', {style:'currency', currency:'EUR'}).format(this.price)
+    }
 }
