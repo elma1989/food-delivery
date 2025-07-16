@@ -93,6 +93,7 @@ h1 {
 }
 
 form {
+    width: 50%;
     font-size: clamp(16px, 1.5dvw, 32px);
     color: #ff8000;
     fieldset {
@@ -144,6 +145,7 @@ form {
 .vc-box {
     display: flex;
     justify-content: center;
+    align-items: center;
     vertical-align: center;
 }
 

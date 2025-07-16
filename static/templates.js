@@ -52,5 +52,21 @@ export class Template{
             </section>
         `
     }
+
+    static dish (dish) {
+        return /*html*/`
+            <div class="dish-card">
+                <div class="dish-img-wrapper">
+                    <img src="static/assets/img/dish/${dish.dishId}.jpg" class="dish-img">
+                    <img src="static/assets/img/restaurant/${dish.restId}.png" class="rest-img">
+                </div>
+                <div class="dish-desc">
+                    <h3>${dish.dishName}</h3>
+                    <span>${dish.desc}</span>
+                    <h4>${dish.restaurantName}</h4>
+                </div>
+            </div>
+        `
+    }
     // #endrgion
 }
