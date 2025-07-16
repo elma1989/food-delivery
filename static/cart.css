@@ -1,0 +1,15 @@
+.cart-wrapper {
+    display: flex;
+    width: 25dvw;
+    height: 100dvh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    border-left: 3px solid #ff8000;
+    box-shadow: -4px 0 4px rgba(255,128,0,0.5);
+    .cart {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}
