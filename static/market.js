@@ -1,7 +1,10 @@
+// #region Imports
 import { User } from './user.js';
 import { Shelf } from './shelf.js';
 import { Dish } from './dish.js';
+import { Cart } from './cart.js';
 import { Template } from './templates.js';
+// #endregion
 export class Market {
     // #region attributes
     refMain = document.querySelector('main .content');
@@ -15,7 +18,8 @@ export class Market {
             new Shelf ('Nudelgerichte', 'noodle'),
             new Shelf ('Pizzen', 'pizza'),
             new Shelf ('Sushi', 'sushi')
-        ]
+        ];
+        this.cart = new Cart();
     }
     // #region Methods
     //  #region Render
@@ -115,6 +119,18 @@ export class Market {
             }
         });
     }
+
+    addDishCardEvent() {
+        const addBtns = document.querySelectorAll('.add-btn');
+        for (let i = 0, k = 0; i < this.shelves.length; i++) {
+            for (let j = 0; j < this.shelves[i].dishes.length; j++, k++) {
+                addBtns[k].addEventListener('click', () => {
+                    console.log(`shelf: ${i} dish: ${j}`);
+                    this.cart.addItem(this.shelves[i].dishes[j]);
+                });
+            }
+        }
+    }
     // #endregion
     // #region UserInput
     readRegisterInput() {
@@ -205,6 +221,7 @@ export class Market {
             });
             this.renderShelves();
             this.renderDishes();
+            this.addDishCardEvent();
         }
     }
     // #endregion
