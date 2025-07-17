@@ -75,16 +75,22 @@ export class Template{
         return /*html*/`
             <table></table>
             <table>
-                <tr><td>Zwischensumme:</td><td class="value">${sum}</td></tr>
-                <tr><td>Versandkosten:</td><td class="value">${delivery}</td></tr>
-                <tr><td class="total">Gesamt:</td><td class="value total">${total}</td></tr>
+                <tr><td class="flex-col">Wert:</td><td class="value">${sum}</td></tr>
+                <tr><td class="flex-col">Versand:</td><td class="value">${delivery}</td></tr>
+                <tr><td class="flex-col total">Gesamt:</td><td class="value total">${total}</td></tr>
             </table>
         `
     }
 
     static singleItem (item) {
         return /*html*/`
-            <td><button class="inc">+</button> ${item.amount} <button class="dec">-</button> x ${item.item.dishName} <button class="delete">del</button></td><td class="value">${item.item.currency()}</td>
+            <td><button class="inc">+</button></td>
+            <td class="amount-col">${item.amount}</td>
+            <td><button class="dec">-</button></td>
+            <td class="mul-col">x</td>
+            <td>${item.item.dishName}</td>
+            <td><button class="del"><img src="static/assets/icons/delete.svg"></button></td>
+            <td class="value">${item.item.currency()}</td>
         `
     }
     // #endrgion

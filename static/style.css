@@ -83,8 +83,14 @@ main {
     min-height: 80dvh;
     .content {
         display: flex;
-        flex-direction: column;
-        align-content: center;
+        padding: 0 0 0 clamp(16px, 11dvw, 160px);
+        .render-main {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            width: 100%;
+            padding-right: 32px;
+        }
     }
 }
 

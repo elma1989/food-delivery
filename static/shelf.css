@@ -46,6 +46,7 @@
             }
             .dish-desc {
                 flex: 1;
+                padding-right: 40px;
                 h3{
                     margin-bottom: 8px;
                 }

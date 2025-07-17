@@ -7,7 +7,7 @@ import { Template } from './templates.js';
 // #endregion
 export class Market {
     // #region attributes
-    refMain = document.querySelector('main .content');
+    refMain = document.querySelector('.render-main');
     url = 'http://localhost:5000/';
     currentUser = null;
     // #endregion
