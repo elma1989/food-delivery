@@ -164,3 +164,6 @@ form {
 .success {
     color: #008000;
 }
+.d-none {
+    display: none;
+}

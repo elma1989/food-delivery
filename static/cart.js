@@ -85,6 +85,31 @@ export class Cart {
             this.addCartItemActions();
         }    
     }
+
+    renderSumary() {
+        const refOverlay = document.querySelector('.overlay');
+        const cartWrapper = document.querySelector('.cart-wrapper');
+        const refSummary = document.querySelector('.summary');
+        refSummary.innerHTML = Template.summary();
+        const refSumTable = document.querySelector('.summary table');
+        this.items.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = Template.summarySingleItem(item);
+            refSumTable.appendChild(tr);
+        });
+
+        const delivery = document.createElement('tr');
+        delivery.innerHTML = Template.summarySingleEntry('Versand', this.euroDelivery);
+        refSumTable.appendChild(delivery);
+
+        const total = document.createElement('tr');
+        total.innerHTML = Template.summarySingleEntry('Gesamt', this.euroTotal);
+        total.classList.add('total');
+        refSumTable.appendChild(total);
+
+        cartWrapper.classList.add('d-none');
+        refOverlay.classList.remove('d-none');
+    }
     // #endregion
     // #region Event
     addCartItemActions() {
@@ -114,7 +139,7 @@ export class Cart {
         if (this.orderReady) {
             orderBtn.classList.add('order-ready');
             orderBtn.addEventListener('click', () => {
-
+                this.renderSumary();
             });
         } else {
             orderBtn.classList.remove('order-ready');

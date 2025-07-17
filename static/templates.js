@@ -93,5 +93,28 @@ export class Template{
             <td class="value">${item.euroValue}</td>
         `
     }
+
+    static summary() {
+        return /*html*/`
+            <h4>Bestellung:</h4>
+            <table></table>
+        `
+    }
+
+    static summarySingleItem(item) {
+        return /*html*/`
+            <td>${item.amount}</td>
+            <td>x</td>
+            <td class="flex-col">${item.item.dishName}</td>
+            <td class="value">${item.euroValue}</td>
+        `
+    }
+
+    static summarySingleEntry(name, value) {
+        return /*html*/`
+            <td colspan="3" class="flex-col">${name}</td>
+            <td class="value">${value}</td>
+        `
+    }
     // #endrgion
 }
