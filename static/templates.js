@@ -81,5 +81,11 @@ export class Template{
             </table>
         `
     }
+
+    static singleItem (item) {
+        return /*html*/`
+            <td><button class="inc">+</button> ${item.amount} <button class="dec">-</button> x ${item.item.dishName} <button class="delete">del</button></td><td class="value">${item.item.currency()}</td>
+        `
+    }
     // #endrgion
 }

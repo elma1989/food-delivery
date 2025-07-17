@@ -52,6 +52,18 @@ export class Cart {
     renderCartContentWrapper() {
         const refCartContent = document.querySelector('.cart-content');
         refCartContent.innerHTML = Template.cartContent(this.euroSum, this.euroDelivery, this.euroTotal);
+        this.renderItems();
+    }
+
+    renderItems() {
+        const refCartTable = document.querySelector('.cart-content table');
+        if (this.items.length > 0) {
+            this.items.forEach (item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML += Template.singleItem(item);
+                refCartTable.appendChild(tr);
+            })
+        }    
     }
     // #endregion
     // #region
