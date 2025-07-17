@@ -55,7 +55,7 @@ export class Cart {
         this.sum = sum;
         this.delivery = (sum < 20) ? 5 : 0;
         this.total = sum + this.delivery;
-        this.orderReady = (sum > 10) ? false : true;
+        this.orderReady = (sum > 10) ? true : false;
         this.currency()
         this.renderCartContentWrapper();
     }
@@ -71,6 +71,7 @@ export class Cart {
         const refCartContent = document.querySelector('.cart-content');
         refCartContent.innerHTML = Template.cartContent(this.euroSum, this.euroDelivery, this.euroTotal);
         this.renderItems();
+        this.readyToOrder();
     }
 
     renderItems() {
@@ -106,6 +107,18 @@ export class Cart {
                 this.delItem(i);
             });
         });
+    }
+
+    readyToOrder() {
+        const orderBtn = document.querySelector('.order-btn');
+        if (this.orderReady) {
+            orderBtn.classList.add('order-ready');
+            orderBtn.addEventListener('click', () => {
+
+            });
+        } else {
+            orderBtn.classList.remove('order-ready');
+        }
     }
     // #endregion
     // #region

@@ -63,5 +63,11 @@
             border-radius: 16px;
             border: none;
         }
+        .order-ready {
+            color: #ffffff;
+            background: #ff8000;
+            cursor: pointer;
+            font-weight: bold;
+        }
     }
 }
