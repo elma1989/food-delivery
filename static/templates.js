@@ -90,7 +90,7 @@ export class Template{
             <td class="mul-col">x</td>
             <td>${item.item.dishName}</td>
             <td><button class="del"><img src="static/assets/icons/delete.svg"></button></td>
-            <td class="value">${item.item.currency()}</td>
+            <td class="value">${item.euroValue}</td>
         `
     }
     // #endrgion

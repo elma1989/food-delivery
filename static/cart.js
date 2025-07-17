@@ -18,7 +18,7 @@ export class Cart {
         let isInItems = false;
         for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].item.dishName == dish.dishName) {
-                this.items[i].amount++;
+                this.incItem(i);
                 isInItems = true;
                 break;
             }
@@ -27,7 +27,24 @@ export class Cart {
             this.items.push(new CartItem(dish));
         }
         this.calcSum();
-        this.renderCartContentWrapper();
+    }
+
+    incItem (index) {
+        this.items[index].incAmount();
+        this.calcSum();
+    }
+
+    decItem (index) {
+        this.items[index].decAmount();
+        if (this.items[index].amount == 0) {
+            this.delItem(index);
+        }
+        this.calcSum();
+    }
+
+    delItem (index) {
+        this.items.splice(index, 1);
+        this.calcSum();
     }
     // #region Calc
     calcSum() {
@@ -40,6 +57,7 @@ export class Cart {
         this.total = sum + this.delivery;
         this.orderReady = (sum > 10) ? false : true;
         this.currency()
+        this.renderCartContentWrapper();
     }
 
     currency() {
@@ -62,8 +80,32 @@ export class Cart {
                 const tr = document.createElement('tr');
                 tr.innerHTML += Template.singleItem(item);
                 refCartTable.appendChild(tr);
-            })
+            });
+            this.addCartItemActions();
         }    
+    }
+    // #endregion
+    // #region Event
+    addCartItemActions() {
+        const incBtns = document.querySelectorAll('.inc');
+        const decBtns = document.querySelectorAll('.dec');
+        const delBtns = document.querySelectorAll('.del');
+        
+        incBtns.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                this.incItem(i);
+            });
+        });
+        decBtns.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                this.decItem(i);
+            });
+        });
+        delBtns.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                this.delItem(i);
+            });
+        });
     }
     // #endregion
     // #region
@@ -71,7 +113,30 @@ export class Cart {
 
 class CartItem {
     amount = 1;
+    value;
+    euroValue
     constructor (item) {
         this.item = item;
+        this.calcValue();
     }
+    // #region Methods
+    calcValue () {
+        this.value = this.item.price * this.amount;
+        this.currency();
+    }
+
+    currency () {
+        this.euroValue = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.value);
+    }
+
+    incAmount () {
+        this.amount++;
+        this.calcValue();
+    }
+
+    decAmount () {
+        this.amount--;
+        this.calcValue();
+    }
+    // endregion
 }
