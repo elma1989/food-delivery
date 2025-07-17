@@ -70,5 +70,16 @@ export class Template{
             </div>
         `
     }
+
+    static cartContent (sum, delivery, total) {
+        return /*html*/`
+            <table></table>
+            <table>
+                <tr><td>Zwischensumme:</td><td class="value">${sum}</td></tr>
+                <tr><td>Versandkosten:</td><td class="value">${delivery}</td></tr>
+                <tr><td class="total">Gesamt:</td><td class="value total">${total}</td></tr>
+            </table>
+        `
+    }
     // #endrgion
 }

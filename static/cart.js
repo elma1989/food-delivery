@@ -1,3 +1,5 @@
+import { Template } from './templates.js';
+
 export class Cart {
     euroSum;
     euroDelivery;
@@ -7,7 +9,9 @@ export class Cart {
         this.sum = 0;
         this.delivery = 5;
         this.total = 5;
+        this.orderReady = false;
         this.currency();
+        this.renderCartContentWrapper();
     }
     // #region Methods
     addItem (dish) {
@@ -23,6 +27,7 @@ export class Cart {
             this.items.push(new CartItem(dish));
         }
         this.calcSum();
+        this.renderCartContentWrapper();
     }
     // #region Calc
     calcSum() {
@@ -32,14 +37,21 @@ export class Cart {
         }
         this.sum = sum;
         this.delivery = (sum < 20) ? 5 : 0;
-        this.total = sum + this.deliveryCosts;
+        this.total = sum + this.delivery;
+        this.orderReady = (sum > 10) ? false : true;
         this.currency()
     }
 
     currency() {
         this.euroSum = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.sum);
         this.euroDelivery = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.delivery);
-        this.eurTotal = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.total);
+        this.euroTotal = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.total);
+    }
+    // #endregion
+    // #region Render
+    renderCartContentWrapper() {
+        const refCartContent = document.querySelector('.cart-content');
+        refCartContent.innerHTML = Template.cartContent(this.euroSum, this.euroDelivery, this.euroTotal);
     }
     // #endregion
     // #region
