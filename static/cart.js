@@ -14,6 +14,7 @@ export class Cart {
         this.renderCartContentWrapper();
     }
     // #region Methods
+    // #region Item
     addItem (dish) {
         let isInItems = false;
         for (let i = 0; i < this.items.length; i++) {
@@ -46,6 +47,15 @@ export class Cart {
         this.items.splice(index, 1);
         this.calcSum();
     }
+
+    emptyCart () {
+        if (this.items.length > 0) {
+            this.items.forEach((item, i) => {
+                this.delItem(i);
+            });
+        }
+    }
+    // #endregion
     // #region Calc
     calcSum() {
         let sum = 0;
@@ -68,10 +78,17 @@ export class Cart {
     // #endregion
     // #region Render
     renderCartContentWrapper() {
+        const cartWrapper = document.querySelector('.cart-wrapper')
         const refCartContent = document.querySelector('.cart-content');
         refCartContent.innerHTML = Template.cartContent(this.euroSum, this.euroDelivery, this.euroTotal);
         this.renderItems();
         this.readyToOrder();
+
+        if (this.items.length > 0) {
+            cartWrapper.classList.remove('d-none');
+        } else {
+            cartWrapper.classList.add('d-none');
+        }
     }
 
     renderItems() {
@@ -136,14 +153,29 @@ export class Cart {
 
     readyToOrder() {
         const orderBtn = document.querySelector('.order-btn');
+
         if (this.orderReady) {
             orderBtn.classList.add('order-ready');
             orderBtn.addEventListener('click', () => {
                 this.renderSumary();
+                this.closeSummaryEvent();
             });
         } else {
             orderBtn.classList.remove('order-ready');
         }
+    }
+
+    closeSummaryEvent() {
+        const refOverlay = document.querySelector('.overlay');
+        const refSummary = document.querySelector('.summary');
+
+        refSummary.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.emptyCart();
+        });
+        refOverlay.addEventListener('click', () => {
+            refOverlay.classList.add('d-none');
+        })
     }
     // #endregion
     // #region
