@@ -10,8 +10,8 @@ export class Cart {
         this.delivery = 5;
         this.total = 5;
         this.orderReady = false;
+        this.view = false;
         this.currency();
-        this.renderCartContentWrapper();
     }
     // #region Methods
     // #region Item
@@ -80,14 +80,23 @@ export class Cart {
     renderCartContentWrapper() {
         const cartWrapper = document.querySelector('.cart-wrapper')
         const refCartContent = document.querySelector('.cart-content');
+        const refCartBtn = document.querySelector('.cart-btn');
         refCartContent.innerHTML = Template.cartContent(this.euroSum, this.euroDelivery, this.euroTotal);
+
         this.renderItems();
         this.readyToOrder();
+        this.clickCartBtn();
+        this.clickCart();
 
-        if (this.items.length > 0) {
+        if (this.items.length > 0 && (window.innerWidth > 1100 || this.view)) {
             cartWrapper.classList.remove('d-none');
         } else {
             cartWrapper.classList.add('d-none');
+            if (window.innerWidth <= 1100) {
+                refCartBtn.classList.remove('d-none');
+            } else {
+                refCartBtn.classList.add('d-none');
+            }
         }
     }
 
@@ -135,17 +144,20 @@ export class Cart {
         const delBtns = document.querySelectorAll('.del');
         
         incBtns.forEach((btn, i) => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 this.incItem(i);
             });
         });
         decBtns.forEach((btn, i) => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation(e);
                 this.decItem(i);
             });
         });
         delBtns.forEach((btn, i) => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
                 this.delItem(i);
             });
         });
@@ -176,6 +188,25 @@ export class Cart {
         refOverlay.addEventListener('click', () => {
             refOverlay.classList.add('d-none');
         })
+    }
+
+    clickCartBtn() {
+        const refCartBtn = document.querySelector('.cart-btn');
+        refCartBtn.addEventListener('click', () => {
+            this.view = true;
+            this.renderCartContentWrapper();
+            window.scrollTo(0,0);
+        });
+    }
+
+    clickCart() {
+        const refCartWrapper = document.querySelector('.cart-wrapper');
+        if (window.innerWidth <= 1100) {
+            refCartWrapper.addEventListener('click', () => {
+            this.view = false;
+            this.renderCartContentWrapper();
+        })
+        }
     }
     // #endregion
     // #region

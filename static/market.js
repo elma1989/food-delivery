@@ -74,6 +74,7 @@ export class Market {
         this.shelves.forEach(shelf => {
             this.refMain.innerHTML += Template.shelf(shelf.name, shelf.img);
         });
+        this.refMain.innerHTML += Template.cartBtn();
     }
 
     renderDishes () {
@@ -129,6 +130,18 @@ export class Market {
                 });
             }
         }
+    }
+
+    addResizeEvent() {
+        const refCart = document.querySelector('.cart-wrapper');
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 1100) {
+                refCart.classList.add('d-none');
+            } else {
+                refCart.classList.remove('d-none');
+            }
+        })
     }
     // #endregion
     // #region UserInput
@@ -221,6 +234,7 @@ export class Market {
             this.renderShelves();
             this.renderDishes();
             this.addDishCardEvent();
+            this.addResizeEvent();
         }
     }
     // #endregion

@@ -22,7 +22,7 @@ export class Template{
             <div class="status-msg"></div>
         `
     }
-
+    // #region Form
     static forminput(name, id, type='text') {
         return /*html*/`
             <div class="formdata">
@@ -40,7 +40,8 @@ export class Template{
             </div>
         `
     }
-
+    // #endregion
+    // #region Dish
     static shelf (name, img) {
         return /*html*/`
             <section class="shelf">
@@ -70,7 +71,8 @@ export class Template{
             </div>
         `
     }
-
+    // #endregion
+    // #region Cart
     static cartContent (sum, delivery, total) {
         return /*html*/`
             <table></table>
@@ -116,5 +118,12 @@ export class Template{
             <td class="value">${value}</td>
         `
     }
+
+    static cartBtn () {
+        return /*html*/`
+            <button class="cart-btn d-none">Warenkorb</button>
+        `
+    }
+    // #endregion
     // #endrgion
 }
