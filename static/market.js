@@ -7,7 +7,7 @@ import { Template } from './templates.js';
 export class Market {
     // #region attributes
     refMain = document.querySelector('.render-main');
-    url = 'https://marco-elste.developerakademie.net:8000/';
+    url = 'http://localhost:8000/';
     currentUser = null;
     cart = null;
     // #endregion

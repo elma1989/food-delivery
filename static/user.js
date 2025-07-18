@@ -70,10 +70,12 @@ export class User {
 
     logout() {
         const refOverlay = document.querySelector('.overlay');
+        const refCardWrapper = document.querySelector('.cart-wrapper');
         this.token = null;
         this.id = 0;
         this.login = false;
         refOverlay.classList.add('d-none');
+        refCardWrapper.add('d-none');
     }
     // #endregion
 }
