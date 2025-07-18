@@ -8,7 +8,7 @@ import { Template } from './templates.js';
 export class Market {
     // #region attributes
     refMain = document.querySelector('.render-main');
-    url = 'http://localhost:5000/';
+    url = 'https://marco-elste.developerakademie.net/food-delivery/';
     currentUser = null;
     cart = null;
     // #endregion
