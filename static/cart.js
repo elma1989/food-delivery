@@ -4,16 +4,60 @@ export class Cart {
     euroSum;
     euroDelivery;
     euroTotal;
-    constructor() {
+    constructor(user, url) {
         this.items = [];
         this.sum = 0;
         this.delivery = 5;
         this.total = 5;
         this.orderReady = false;
         this.view = false;
+        this.user = user;
+        this.url = url;
         this.currency();
     }
     // #region Methods
+    async sendOrder() {
+        const payload = [];
+        const refMain = document.querySelector('.render-main');
+        const auth = `Bearer ${this.user.token}`
+
+        this.items.forEach(item => {
+            payload.push({
+                name: item.item.dishName,
+                amount: item.amount
+            });
+        });
+
+        try {
+            const response = await fetch(`${this.url}users/${this.user.id}/deliveries`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type":"application/json",
+                    "Authorization": auth
+                },
+                body: JSON.stringify(payload)
+            });
+            if (response.ok) {
+                this.renderSumary();
+                this.closeSummaryEvent();
+            } else {
+                let msg = ''
+                switch (response.status) {
+                    case 401: 
+                        mag = 'Der Nutzer ist nicht authorisiert.'
+                        break;
+                    case 403:
+                        msg = 'Benutzer ist nicht eingeloggt.'
+                        break;
+                    case 404:
+                        msg = 'Datenbank wurde nicht gefunden!.'
+                }
+                refMain.innerHTML = msg;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
     // #region Item
     addItem (dish) {
         let isInItems = false;
@@ -169,8 +213,7 @@ export class Cart {
         if (this.orderReady) {
             orderBtn.classList.add('order-ready');
             orderBtn.addEventListener('click', () => {
-                this.renderSumary();
-                this.closeSummaryEvent();
+                this.sendOrder();
             });
         } else {
             orderBtn.classList.remove('order-ready');

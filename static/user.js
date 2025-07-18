@@ -1,3 +1,5 @@
+import { Cart } from './cart.js'
+
 export class User {
     // #region Attributes
     login = false;
@@ -51,9 +53,10 @@ export class User {
             });
             if (response.ok) {
                 const data = await response.json();
-                this.id = data.id;
+                this.id = data.userId;
                 this.token = data.token;
                 this.login = true;
+                market.cart = new Cart(this, this.url);
                 market.renderNav();
                 market.loadDishes();    
             } else {

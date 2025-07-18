@@ -10,6 +10,7 @@ export class Market {
     refMain = document.querySelector('.render-main');
     url = 'http://localhost:5000/';
     currentUser = null;
+    cart = null;
     // #endregion
     constructor() {
         this.currentUser = new User(this.url);
@@ -19,7 +20,6 @@ export class Market {
             new Shelf ('Pizzen', 'pizza'),
             new Shelf ('Sushi', 'sushi')
         ];
-        this.cart = new Cart();
     }
     // #region Methods
     //  #region Render
