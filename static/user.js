@@ -64,5 +64,11 @@ export class User {
             console.error(error);
         }
     }
+
+    logout() {
+        this.token = null;
+        this.id = 0;
+        this.login = false;
+    }
     // #endregion
 }

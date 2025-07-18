@@ -34,6 +34,7 @@ export class Market {
             refNav.innerHTML += Template.li('Login');
         }
 
+        this.addNavEvents();
     }
 
     renderMain () {
@@ -90,24 +91,32 @@ export class Market {
     // #region Events
     addNavEvents () {
         const refNavBtns = document.querySelectorAll('nav ul li button');
-        refNavBtns[0].addEventListener('click', e => {
-            refNavBtns.forEach(btn => {
-                btn.classList.remove('nav-btn-active');
-                this.renderForm('Registrieren');
-                this.renderRegister();
-                this.addSubmitEvent(0);
+        if (!this.currentUser.login) {
+            refNavBtns[0].addEventListener('click', e => {
+                refNavBtns.forEach(btn => {
+                    btn.classList.remove('nav-btn-active');
+                    this.renderForm('Registrieren');
+                    this.renderRegister();
+                    this.addSubmitEvent(0);
+                });
+                e.currentTarget.classList.add('nav-btn-active');
             });
-            e.currentTarget.classList.add('nav-btn-active');
-        });
-        refNavBtns[1].addEventListener('click', e => {
-            refNavBtns.forEach(btn => {
-                btn.classList.remove('nav-btn-active');
-                this.renderForm('Anmelden');
-                this.renderLogin();
-                this.addSubmitEvent(1);
+            refNavBtns[1].addEventListener('click', e => {
+                refNavBtns.forEach(btn => {
+                    btn.classList.remove('nav-btn-active');
+                    this.renderForm('Anmelden');
+                    this.renderLogin();
+                    this.addSubmitEvent(1);
+                });
+                e.currentTarget.classList.add('nav-btn-active');
             });
-            e.currentTarget.classList.add('nav-btn-active');
-        });
+        } else {
+            refNavBtns[0].addEventListener('click', () => {
+                this.currentUser.logout();
+                this.renderNav();
+                this.renderMain();
+            })
+        }
     }
 
     addSubmitEvent(form) {
