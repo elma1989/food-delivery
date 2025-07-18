@@ -136,11 +136,12 @@ export class Cart {
             cartWrapper.classList.remove('d-none');
         } else {
             cartWrapper.classList.add('d-none');
-            if (window.innerWidth <= 1100) {
-                refCartBtn.classList.remove('d-none');
-            } else {
-                refCartBtn.classList.add('d-none');
-            }
+        }
+
+        if (this.items.length > 0) {
+            refCartBtn.classList.remove('d-none');
+        } else {
+            refCartBtn.classList.add('d-none');
         }
     }
 

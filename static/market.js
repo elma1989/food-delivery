@@ -2,13 +2,12 @@
 import { User } from './user.js';
 import { Shelf } from './shelf.js';
 import { Dish } from './dish.js';
-import { Cart } from './cart.js';
 import { Template } from './templates.js';
 // #endregion
 export class Market {
     // #region attributes
     refMain = document.querySelector('.render-main');
-    url = 'https://marco-elste.developerakademie.net/food-delivery/';
+    url = 'https://marco-elste.developerakademie.net:8000/';
     currentUser = null;
     cart = null;
     // #endregion

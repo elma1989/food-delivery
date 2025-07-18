@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request
 from flask_jwt_extended import create_access_token, jwt_required
 from database import Manager, Customer, Delivery
 
-api = Blueprint('api',__name__, url_prefix='/food-delivery')
+api = Blueprint('api',__name__)
 
 @api.route('/')
 def index():

@@ -69,9 +69,11 @@ export class User {
     }
 
     logout() {
+        const refOverlay = document.querySelector('.overlay');
         this.token = null;
         this.id = 0;
         this.login = false;
+        refOverlay.classList.add('d-none');
     }
     // #endregion
 }
