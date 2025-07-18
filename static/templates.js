@@ -1,5 +1,11 @@
 export class Template{
     // #region Methods
+    static errMsg(msg) {
+        return /*html*/`
+            <div class="status-msg">Fehler: ${msg}</div>
+        `
+    }
+
     static li(desc) {
         return /*html*/`
             <li><button>${desc}</button></li>

@@ -11,7 +11,7 @@ def index():
     return render_template('index.html')
 
 @api.route('/items/')
-# @jwt_required()
+@jwt_required()
 def items():
     mgr = Manager()
     items = mgr.items

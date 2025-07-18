@@ -217,24 +217,34 @@ export class Market {
     // #endregion
     // #region Requests
     async loadDishes() {
-        const auth = `Bearer ${this.currentUser.token}`;
-        const response = await fetch(this.url + 'items/', {
-            headers: {
-                "Authorization": auth
-            }
-        });
-        if (response.ok) {
-            const dishes = await response.json();
-            dishes.forEach (dish => {
-                if (dish.type == 'Burger') this.shelves[0].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
-                if (dish.type == 'Pasta') this.shelves[1].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
-                if (dish.type == 'Pizza') this.shelves[2].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
-                if (dish.type == 'Sushi') this.shelves[3].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
+        try {
+            const auth = `Bearer ${this.currentUser.token}`;
+            const response = await fetch(this.url + 'items/', {
+                headers: {
+                    "Authorization": auth
+                }
             });
-            this.renderShelves();
-            this.renderDishes();
-            this.addDishCardEvent();
-            this.addResizeEvent();
+            if (response.ok) {
+                const dishes = await response.json();
+                dishes.forEach (dish => {
+                    if (dish.type == 'Burger') this.shelves[0].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
+                    if (dish.type == 'Pasta') this.shelves[1].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
+                    if (dish.type == 'Pizza') this.shelves[2].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
+                    if (dish.type == 'Sushi') this.shelves[3].addDish (new Dish(dish.name, dish.desc, dish.price, dish.review, dish.id, dish.restaurant.name, dish.restaurant.review, dish.restaurant.id));
+                });
+                this.renderShelves();
+                this.renderDishes();
+                this.addDishCardEvent();
+                this.addResizeEvent();
+            } else {
+                let output = '';
+                switch (response.status) {
+                    case 404: output = 'Datenbank wurde nicht gefunden'
+                }
+                this.refMain.innerHTML = Template.errMsg(output);
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
     // #endregion
