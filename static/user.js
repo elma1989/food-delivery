@@ -75,7 +75,7 @@ export class User {
         this.id = 0;
         this.login = false;
         refOverlay.classList.add('d-none');
-        refCardWrapper.add('d-none');
+        refCardWrapper.classList.add('d-none');
     }
     // #endregion
 }
