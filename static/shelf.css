@@ -11,6 +11,7 @@
         img {
             width: 100%;
             height: 150px;
+            margin-bottom: 16px;
         }
         @media (max-width: 700px) {
             img {
@@ -27,8 +28,8 @@
             display: flex;
             width: 100%;
             height: 100%;
+            min-height: 210px;
             gap: 16px;
-            min-height: 150px;
             border: 1px solid rgba(0,0,0,0.2);
             border-radius: 8px;
             padding: 16px 32px;
@@ -63,66 +64,84 @@
             .dish-desc {
                 flex: 1;
                 padding-right: 40px;
-                h3{
-                    margin-bottom: 8px;
+                table {
+                    width: 100%;
+                    h3{
+                        margin-bottom: 8px;
                 }
-                h4 {
-                    margin-top: 4px;
+                    h4 {
+                        margin-top: 4px;
+                    }
                 }
-                .price {
-                    color: #ff8000;
-                    font-weight: bold;
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                }
-                .add-btn {
-                    width: 32px;
-                    height: 32px;
-                    position: absolute;
-                    right: 0;
-                    top: 59px;
-                    color: #ff8000;
-                    font-size: 24px;
-                    border: 1px solid rgba(0,0,0,0.2);
-                    cursor: pointer;
-                }
+            }
+            .price {
+                color: #ff8000;
+                font-weight: bold;
+                position: absolute;
+                top: 16px;
+                right: 32px;
+            }
+            .add-btn {
+                width: 32px;
+                height: 32px;
+                position: absolute;
+                right: 32px;
+                top: 89px;
+                color: #ff8000;
+                font-size: 24px;
+                border: 1px solid rgba(0,0,0,0.2);
+                cursor: pointer;
             }
         }
     }
 }
-@media (max-width: 600px) {
+@media (max-width: 650px) {
     .shelf {
         .dish-wrapper {
             .dish-card {
                 flex-direction: column;
-                min-height: 300px;
+                min-height: 450px;
                 align-items: center;
+                .dish-img-wrapper {
+                    .dish-img {
+                        width: 200px;
+                        height: 150px;
+                    }
+                    .rest-img {
+                        width: 50px;
+                        height: 50px;
+                        left: -25px;
+                    }
+                }
                 .dish-desc {
                     display: flex;
-                    width: 288px;
+                    width: 100%;
                     flex-direction: column;
                     align-items: center;
                     text-align: left;
-                    h3, h4, .desc {
-                        text-align: left;
-                        align-self: flex-start
-                    }
-                    .price {
-                        right: -16px;
-                    }
-                    .add-btn {
-                        top: auto;
-                        right: auto;
-                        bottom: 0;
-                        justify-self: flex-end;
+                    padding: 0;
+                    table {
+                        h3, h4, .desc {
+                            text-align: left;
+                            align-self: flex-start
+                        }
                     }
                 }
-                @media (max-width: 450px) {
+                .price {
+                    top: auto;
+                    bottom: 16px;
+                    }
+                .add-btn {
+                        top: auto;
+                        right: auto;
+                        bottom: 16px;
+                        justify-self: flex-end;
+                    }
+                /* @media (max-width: 450px) {
                     .dish-desc {
                         width: 200px;
                     }
-                }
+                } */
             }
         }
     }

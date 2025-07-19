@@ -46,6 +46,12 @@ header, footer {
     height: 10dvh;
 }
 
+@media (max-width: 450px) {
+    header, footer {
+        height: 5dvh;
+    }
+}
+
 header{
     .content {
         display: flex;
@@ -91,6 +97,12 @@ main {
             width: 100%;
             padding-right: 32px;
         }
+    }
+}
+
+@media (max-width: 450px) {
+    main {
+        min-height: 90dvh;
     }
 }
 

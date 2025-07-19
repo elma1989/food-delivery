@@ -68,15 +68,32 @@ export class Template{
                     <img src="static/assets/img/restaurant/${dish.restId}.png" class="rest-img">
                 </div>
                 <div class="dish-desc">
-                    <h3>${dish.dishName}</h3>
-                    <span class="desc">${dish.desc}</span>
-                    <h4>${dish.restaurantName}</h4>
-                    <span class="price">${dish.currency()}</span>
-                    <button class="add-btn">+</button>
+                    <table>
+                        <tr><td><h3>${dish.dishName}</h3></td></tr>
+                        <tr><td class="dish-review"></td></tr>
+                        <tr><td class="desc">${dish.desc}</td></tr>
+                        <tr><td><h4>${dish.restaurantName}</span></h4></td></tr>
+                        <tr><td class="restaurant-review"></td></tr>
+                    </table>
                 </div>
+                <span class="price">${dish.currency()}</span>
+                <button class="add-btn">+</button>
             </div>
         `
     }
+
+    static star() {
+        return /*html*/`
+            <img src="static/assets/icons/star.svg" class="star">
+        `
+    }
+
+    static starFull() {
+        return /*html*/`
+            <img src="static/assets/icons/star_full.svg" class="star">
+        `
+    }
+
     // #endregion
     // #region Cart
     static cartContent (sum, delivery, total) {
