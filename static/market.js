@@ -7,7 +7,7 @@ import { Template } from './templates.js';
 export class Market {
     // #region attributes
     refMain = document.querySelector('.render-main');
-    local = 'http://localhost:8000/';
+    local = 'http://localhost:5000/';
     server = 'http://164.92.201.35:8000/';
     url = this.local;
     currentUser = null;
@@ -16,7 +16,7 @@ export class Market {
     constructor() {
         this.currentUser = new User(this.url);
         this.shelves = [
-            new Shelf('Burger', 'burger'),
+            new Shelf ('Burger', 'burger'),
             new Shelf ('Nudelgerichte', 'noodle'),
             new Shelf ('Pizzen', 'pizza'),
             new Shelf ('Sushi', 'sushi')
@@ -40,9 +40,17 @@ export class Market {
 
     renderMain () {
         this.refMain.innerHTML = ''
+
+        this.currentUser = new User(this.url);
+        this.currentUser.load();
         
-        this.refMain.innerHTML = Template.greating();
-        this.refMain.classList.add('vc-box');
+        if (!this.currentUser || this.currentUser.id == 0) {
+            this.refMain.innerHTML = Template.greating();
+            this.refMain.classList.add('vc-box');
+        } else {
+            this.renderNav();
+            this.loadDishes();
+        }
     }
 
     renderForm (name) {

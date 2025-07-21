@@ -56,6 +56,7 @@ export class User {
                 this.id = data.userId;
                 this.token = data.token;
                 this.login = true;
+                this.save();    
                 market.cart = new Cart(this, this.url);
                 market.renderNav();
                 market.loadDishes();    
@@ -66,6 +67,21 @@ export class User {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    save() {
+        localStorage.setItem('user', JSON.stringify({
+            id: this.id,
+            token: this.token,
+            login: this.login
+        }));
+    }
+
+    load() {
+        const userData = JSON.parse(localStorage.getItem('user'));
+        this.token = userData.token;
+        this.id = userData.id;
+        this.login = userData.login;
     }
 
     logout() {
