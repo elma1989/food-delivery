@@ -8,7 +8,7 @@ export class Market {
     // #region attributes
     refMain = document.querySelector('.render-main');
     local = 'http://localhost:8000/';
-    server = 'https://marco-elste.developerakademie.net:8000/';
+    server = 'http://164.92.201.35:8000/';
     url = this.local;
     currentUser = null;
     cart = null;
