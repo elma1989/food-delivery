@@ -208,6 +208,17 @@ export class Cart {
         });
     }
 
+    resizeBody() {
+        const refCartWrapper = document.querySelector('.cart-wrapper')
+        document.body.addEventListener('resize', () => {
+            if (window.innerWidth <= 1100) {
+                refCartWrapper.classList.add('d-none');
+            } else {
+                refCartWrapper.classList.remove('d-none');
+            }
+        })
+    }
+
     readyToOrder() {
         const orderBtn = document.querySelector('.order-btn');
 
@@ -227,10 +238,10 @@ export class Cart {
 
         refSummary.addEventListener('click', (e) => {
             e.stopPropagation();
-            this.emptyCart();
         });
         refOverlay.addEventListener('click', () => {
             refOverlay.classList.add('d-none');
+            this.emptyCart()
         })
     }
 

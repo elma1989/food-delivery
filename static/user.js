@@ -58,6 +58,7 @@ export class User {
                 this.login = true;
                 this.save();    
                 market.cart = new Cart(this, this.url);
+                market.cart.resizeBody();
                 market.renderNav();
                 market.loadDishes();    
             } else {
@@ -79,9 +80,11 @@ export class User {
 
     load() {
         const userData = JSON.parse(localStorage.getItem('user'));
-        this.token = userData.token;
-        this.id = userData.id;
-        this.login = userData.login;
+        if (userData) {
+            this.token = userData.token;
+            this.id = userData.id;
+            this.login = userData.login;
+        }
     }
 
     logout() {
@@ -90,6 +93,7 @@ export class User {
         this.token = null;
         this.id = 0;
         this.login = false;
+        localStorage.removeItem('user');
         refOverlay.classList.add('d-none');
         refCardWrapper.classList.add('d-none');
     }

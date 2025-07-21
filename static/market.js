@@ -2,6 +2,7 @@
 import { User } from './user.js';
 import { Shelf } from './shelf.js';
 import { Dish } from './dish.js';
+import { Cart } from './cart.js';
 import { Template } from './templates.js';
 // #endregion
 export class Market {
@@ -41,7 +42,6 @@ export class Market {
     renderMain () {
         this.refMain.innerHTML = ''
 
-        this.currentUser = new User(this.url);
         this.currentUser.load();
         
         if (!this.currentUser || this.currentUser.id == 0) {
@@ -50,6 +50,8 @@ export class Market {
         } else {
             this.renderNav();
             this.loadDishes();
+            this.cart = new Cart(this.currentUser, this.url);
+            this.cart.resizeBody();
         }
     }
 
@@ -174,17 +176,6 @@ export class Market {
         }
     }
 
-    addResizeEvent() {
-        const refCart = document.querySelector('.cart-wrapper');
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth <= 1100) {
-                refCart.classList.add('d-none');
-            } else {
-                refCart.classList.remove('d-none');
-            }
-        })
-    }
     // #endregion
     // #region UserInput
     readRegisterInput() {
@@ -278,7 +269,6 @@ export class Market {
                 this.renderDishes();
                 this.renderReviews();
                 this.addDishCardEvent();
-                this.addResizeEvent();
             } else {
                 let output = '';
                 switch (response.status) {
