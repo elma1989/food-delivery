@@ -10,7 +10,7 @@ export class Market {
     refMain = document.querySelector('.render-main');
     local = 'http://localhost:5000/';
     server = 'http://164.92.201.35:8000/';
-    url = this.local;
+    url = this.server;
     currentUser = null;
     cart = null;
     // #endregion
@@ -22,6 +22,7 @@ export class Market {
             new Shelf ('Pizzen', 'pizza'),
             new Shelf ('Sushi', 'sushi')
         ];
+        this.cart = new Cart(this.currentUser, this.url);
     }
     // #region Methods
     //  #region Render
@@ -196,6 +197,13 @@ export class Market {
         } 
     }
 
+    cleanError() {
+        const refErrmsgs = document.querySelectorAll('.errmsg')
+        refErrmsgs.forEach( msg => {
+            msg.innerHTML = '';
+        })
+    }
+
     readLoginInput() {
         const refInputs = document.querySelectorAll('input');        
         const userInput =  {
@@ -210,9 +218,11 @@ export class Market {
         const refErrmsg = document.querySelectorAll('.errmsg');
         const regexEmail = /\w+?(\.|_|-)?\w+@\w+\.\w+/i
         const regexName = /[A-Z][a-z]+/
-        const regexStreet = /[A-Z][a-z-]+\.?\s[0-9][a-z]?/g
+        const regexStreet = /[A-Z][a-z-ß]+\.?\s[0-9][a-z]?/g
         const regexZipCode = /[0-9]{5,5}/
         const regexCity = /[A-Z][a-z]+/
+
+        this.cleanError();
 
         if (!regexEmail.test(userInput.email)) {
             refErrmsg[0].textContent = 'E-Mail ist nicht korrekt!';

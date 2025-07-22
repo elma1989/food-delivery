@@ -225,7 +225,8 @@ export class Cart {
         if (this.orderReady) {
             orderBtn.classList.add('order-ready');
             orderBtn.addEventListener('click', () => {
-                this.sendOrder();
+                this.renderSumary();
+                this.closeSummaryEvent();
             });
         } else {
             orderBtn.classList.remove('order-ready');
