@@ -15,49 +15,51 @@ export class Cart {
         this.url = url;
         this.currency();
     }
+
     // #region Methods
     async sendOrder() {
-        const payload = [];
-        const refMain = document.querySelector('.render-main');
-        const auth = `Bearer ${this.user.token}`
+        // const payload = [];
+        // const refMain = document.querySelector('.render-main');
+        // const auth = `Bearer ${this.user.token}`
 
-        this.items.forEach(item => {
-            payload.push({
-                name: item.item.dishName,
-                amount: item.amount
-            });
-        });
+        // this.items.forEach(item => {
+        //     payload.push({
+        //         name: item.item.dishName,
+        //         amount: item.amount
+        //     });
+        // });
 
-        try {
-            const response = await fetch(`${this.url}users/${this.user.id}/deliveries`, {
-                method: 'POST',
-                headers: {
-                    "Content-Type":"application/json",
-                    "Authorization": auth
-                },
-                body: JSON.stringify(payload)
-            });
-            if (response.ok) {
-                this.renderSumary();
-                this.closeSummaryEvent();
-            } else {
-                let msg = ''
-                switch (response.status) {
-                    case 401: 
-                        mag = 'Der Nutzer ist nicht authorisiert.'
-                        break;
-                    case 403:
-                        msg = 'Benutzer ist nicht eingeloggt.'
-                        break;
-                    case 404:
-                        msg = 'Datenbank wurde nicht gefunden!.'
-                }
-                refMain.innerHTML = msg;
-            }
-        } catch (error) {
-            console.error(error);
-        }
+        // try {
+        //     const response = await fetch(`${this.url}users/${this.user.id}/deliveries`, {
+        //         method: 'POST',
+        //         headers: {
+        //             "Content-Type":"application/json",
+        //             "Authorization": auth
+        //         },
+        //         body: JSON.stringify(payload)
+        //     });
+        //     if (response.ok) {
+        //         this.renderSumary();
+        //         this.closeSummaryEvent();
+        //     } else {
+        //         let msg = ''
+        //         switch (response.status) {
+        //             case 401: 
+        //                 mag = 'Der Nutzer ist nicht authorisiert.'
+        //                 break;
+        //             case 403:
+        //                 msg = 'Benutzer ist nicht eingeloggt.'
+        //                 break;
+        //             case 404:
+        //                 msg = 'Datenbank wurde nicht gefunden!.'
+        //         }
+        //         refMain.innerHTML = msg;
+        //     }
+        // } catch (error) {
+        //     console.error(error);
+        // }
     }
+
     // #region Item
     addItem (dish) {
         let isInItems = false;
@@ -119,29 +121,24 @@ export class Cart {
         this.euroDelivery = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.delivery);
         this.euroTotal = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.total);
     }
+
     // #endregion
     // #region Render
     renderCartContentWrapper() {
         const cartWrapper = document.querySelector('.cart-wrapper')
         const refCartContent = document.querySelector('.cart-content');
-        const refCartBtn = document.querySelector('.cart-btn');
         refCartContent.innerHTML = Template.cartContent(this.euroSum, this.euroDelivery, this.euroTotal);
 
         this.renderItems();
         this.readyToOrder();
         this.clickCartBtn();
         this.clickCart();
+        this.clickCartContent();
 
-        if (this.items.length > 0 && (window.innerWidth > 1100 || this.view)) {
+        if (window.innerWidth > 1100 || this.view) {
             cartWrapper.classList.remove('d-none');
         } else {
             cartWrapper.classList.add('d-none');
-        }
-
-        if (this.items.length > 0) {
-            refCartBtn.classList.remove('d-none');
-        } else {
-            refCartBtn.classList.add('d-none');
         }
     }
 
@@ -163,10 +160,6 @@ export class Cart {
         const refSummary = document.querySelector('.summary');
         refSummary.innerHTML = Template.summary();
 
-        this.renderSummaryItems();
-        this.renderSummarySum();
-
-        cartWrapper.classList.add('d-none');
         refOverlay.classList.remove('d-none');
     }
 
@@ -237,6 +230,8 @@ export class Cart {
             orderBtn.classList.add('order-ready');
             orderBtn.addEventListener('click', () => {
                 this.renderSumary();
+                this.renderSummaryItems();
+                this.renderSummarySum()
                 this.closeSummaryEvent();
             });
         } else {
@@ -259,9 +254,13 @@ export class Cart {
 
     clickCartBtn() {
         const refCartBtn = document.querySelector('.cart-btn');
+        const refCartWrapper = document.querySelector('.cart-wrapper');
         refCartBtn.addEventListener('click', () => {
+            console.log('cart-btn');
             this.view = true;
-            this.renderCartContentWrapper();
+            refCartWrapper.style.display = 'flex';
+            refCartWrapper.classList.remove('d-none');
+            // this.renderCartContentWrapper();
             window.scrollTo(0,0);
         });
     }
@@ -270,10 +269,16 @@ export class Cart {
         const refCartWrapper = document.querySelector('.cart-wrapper');
         if (window.innerWidth <= 1100) {
             refCartWrapper.addEventListener('click', () => {
-            this.view = false;
-            this.renderCartContentWrapper();
-        })
+                this.view = false;
+                refCartWrapper.style.display = 'none';
+            });
         }
+    }
+
+    clickCartContent() {
+        document.querySelector('.cart-content').addEventListener('click', e => {
+            e.stopPropagation();
+        })
     }
     // #endregion
     // #region

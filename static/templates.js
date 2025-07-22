@@ -145,7 +145,7 @@ export class Template{
 
     static cartBtn () {
         return /*html*/`
-            <button class="cart-btn d-none">Warenkorb</button>
+            <button class="cart-btn">Warenkorb</button>
         `
     }
     // #endregion
