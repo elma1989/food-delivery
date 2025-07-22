@@ -119,6 +119,12 @@ export class Template{
         `
     }
 
+    static singleItemEntry (key, value) {
+        return /*html*/`
+            <td>${key}</td><td class="value">${value}</td>
+        `
+    }
+
     static summary() {
         return /*html*/`
             <h4>Bestellung:</h4>
