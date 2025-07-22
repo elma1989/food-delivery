@@ -162,27 +162,38 @@ export class Cart {
         const cartWrapper = document.querySelector('.cart-wrapper');
         const refSummary = document.querySelector('.summary');
         refSummary.innerHTML = Template.summary();
-        const refSumTable = document.querySelector('.summary table');
-        this.items.forEach(item => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = Template.summarySingleItem(item);
-            refSumTable.appendChild(tr);
-        });
 
-        const delivery = document.createElement('tr');
-        delivery.innerHTML = Template.summarySingleEntry('Versand', this.euroDelivery);
-        refSumTable.appendChild(delivery);
-
-        const total = document.createElement('tr');
-        total.innerHTML = Template.summarySingleEntry('Gesamt', this.euroTotal);
-        total.classList.add('total');
-        refSumTable.appendChild(total);
+        this.renderSummaryItems();
+        this.renderSummarySum();
 
         cartWrapper.classList.add('d-none');
         refOverlay.classList.remove('d-none');
     }
+
+    renderSummaryItems() { 
+        this.items.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = Template.summarySingleItem(item);
+            document.querySelector('.summary table').appendChild(tr);
+        });
+    }
+
+    renderSummarySum() {
+        const delivery = document.createElement('tr');
+        const total  = document.createElement('tr');
+        const refTable = document.querySelector('.summary table');
+
+        delivery.innerHTML = Template.summarySingleEntry('Versand', this.euroDelivery);
+        total.innerHTML = Template.summarySingleEntry('Summe', this.euroTotal);
+        total.classList.add('total');
+
+        refTable.appendChild(delivery);
+        refTable.appendChild(total);
+    }
+
     // #endregion
     // #region Event
+
     addCartItemActions() {
         const incBtns = document.querySelectorAll('.inc');
         const decBtns = document.querySelectorAll('.dec');

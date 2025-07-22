@@ -122,6 +122,7 @@ export class Template{
     static summary() {
         return /*html*/`
             <h4>Bestellung:</h4>
+            <p>Diese Atikel werden versendet:</p>
             <table></table>
         `
     }

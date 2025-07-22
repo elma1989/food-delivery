@@ -10,7 +10,7 @@ export class Market {
     refMain = document.querySelector('.render-main');
     local = 'http://localhost:5000/';
     server = 'http://164.92.201.35:8000/';
-    url = this.server;
+    url = this.local;
     currentUser = null;
     cart = null;
     // #endregion

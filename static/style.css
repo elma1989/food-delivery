@@ -179,3 +179,7 @@ form {
 .d-none {
     display: none;
 }
+
+h4, p {
+    margin-bottom: 1rem;
+}
