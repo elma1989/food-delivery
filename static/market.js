@@ -1,5 +1,4 @@
 // #region Imports
-import { User } from './user.js';
 import { Shelf } from './shelf.js';
 import { Dish } from './dish.js';
 import { Cart } from './cart.js';
