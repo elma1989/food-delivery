@@ -1,7 +1,7 @@
 // #region Imports
 import { Shelf } from './shelf.js';
 import { Dish } from './dish.js';
-import { Cart } from './cart.js';
+// import { Cart } from './cart.js';
 import { Template } from './templates.js';
 // #endregion
 export class Market {
