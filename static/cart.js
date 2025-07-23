@@ -107,9 +107,7 @@ export class Cart{
     }
 
     empty() {
-        for (let i = 0; i < this.cartItems.length; i++) {
-            this.removeItem(i);
-        }
+        this.cartItems = [];
         this.refresh();
     }
 
@@ -264,6 +262,7 @@ export class Cart{
         const refOverlay = document.querySelector('.overlay');
         refOverlay.addEventListener('click', () => {
             refOverlay.classList.add('d-none');
+            window.location.reload();
         });
     }
 }
