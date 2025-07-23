@@ -103,6 +103,14 @@ export class Cart{
 
     removeItem(index) {
         this.cartItems.splice(index, 1);
+        this.refresh();
+    }
+
+    empty() {
+        for (let i = 0; i < this.cartItems.length; i++) {
+            this.removeItem(i);
+        }
+        this.refresh();
     }
 
     decItem(index) {
@@ -113,9 +121,11 @@ export class Cart{
     }
 
     order() {
-        console.log('Order');
         this.renderSummaryItems();
         this.renderSummarySum();
+        this.clickSummary();
+        this.clickOverlay();
+        this.empty();
     }
 
     view() {
@@ -228,7 +238,6 @@ export class Cart{
             decBtns.forEach((btn, index) => {
                 btn.addEventListener('click', () => {
                     this.decItem(index);
-                    this.refresh();
                 })
             })
         }
@@ -240,9 +249,21 @@ export class Cart{
             delBtns.forEach((btn, index) => {
                 btn.addEventListener('click', () => {
                     this.removeItem(index);
-                    this.refresh();
                 });
             });
         }
+    }
+
+    clickSummary() {
+        document.querySelector('.summary').addEventListener('click', (e) => {
+            e.stopPropagation();
+        }) 
+    }
+
+    clickOverlay() {
+        const refOverlay = document.querySelector('.overlay');
+        refOverlay.addEventListener('click', () => {
+            refOverlay.classList.add('d-none');
+        });
     }
 }
