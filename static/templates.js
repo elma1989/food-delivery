@@ -103,9 +103,9 @@ export class Template{
         `
     }
 
-    static cartBtn () {
+    static cartBtn (value) {
         return /*html*/`
-            <button class="cart-btn">Warenkorb</button>
+            <button class="cart-btn">Warenkorb<br/>(${value})</button>
         `
     }
     // #endregion

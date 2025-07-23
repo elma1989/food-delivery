@@ -30,7 +30,7 @@ export class Market {
         this.shelves.forEach(shelf => {
             this.refMain.innerHTML += Template.shelf(shelf.name, shelf.img);
         });
-        this.refMain.innerHTML += Template.cartBtn();
+        this.refMain.innerHTML += Template.cartBtn('0,00 €');
     }
 
     renderDishes () {

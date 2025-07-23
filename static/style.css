@@ -168,10 +168,11 @@ form {
     vertical-align: center;
 }
 
-.status-msg {
+.errmsg {
     color: #ff0000;
     font-weight: bold;
-    font-size: 3rem;
+    font-size: 1.5rem;
+    margin-top: 1rem;
 }
 .success {
     color: #008000;

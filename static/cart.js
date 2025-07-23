@@ -39,8 +39,7 @@ export class Cart{
     // #endregion
 
     constructor() {
-        this.currency();
-        this.renderSum();
+        this.clickOrderBtn();
     }
 
     // #region Methods
@@ -70,12 +69,13 @@ export class Cart{
     refresh() {
         this.calc();
         this.currency();
-        this.clickOrderBtn();
         this.renderItems();
         this.clickIncBtn();
         this.clickDecBtn();
         this.clickDelBtn();
         this.renderSum();
+        this.renderCartBtn();
+        this.renderEmpty();
     }
 
     addItem(item) {
@@ -195,27 +195,26 @@ export class Cart{
         refTable.appendChild(deliveryTr);
         refTable.appendChild(totalTr);
     }
+
+    renderEmpty() {
+        const refErr = document.querySelector('.errmsg');
+        if (this.cartItems.length == 0) {
+            refErr.innerHTML = 'Keine Waren vorhanden!';
+        } else {
+            refErr.innerHTML = '';
+        }
+    }
+
+    renderCartBtn() {
+        document.querySelector('.cart-btn').innerHTML = Template.cartBtn(this.euroTotal);
+    }
     // #endregion
 
     // #region Event
     clickOrderBtn() {
-        const refOrderBtn = document.querySelector('.order-btn');
-
-        if (this.sum > 10) {
-            if (!this.orderReady) {
-                this.orderReady = true;
-                refOrderBtn.classList.add('order-ready');
-                refOrderBtn.addEventListener('click', () => {
-                    this.order();
-                });
-            }
-        } else {
-            if (this.orderReady) {
-                this.orderReady = false;
-                refOrderBtn.classList.remove('order-ready');
-                refOrderBtn.removeEventListener('click', this.order);
-            }
-        }
+        document.querySelector('.order-btn').addEventListener('click', () => {
+            this.order();
+        })
     }
 
     clickIncBtn() {
@@ -262,7 +261,6 @@ export class Cart{
         const refOverlay = document.querySelector('.overlay');
         refOverlay.addEventListener('click', () => {
             refOverlay.classList.add('d-none');
-            window.location.reload();
         });
     }
 }
