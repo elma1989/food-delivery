@@ -121,7 +121,8 @@ export class Template{
 
     static singleItemEntry (key, value) {
         return /*html*/`
-            <td colspan="6">${key}</td><td class="ta-right">${value}</td>
+            <td colspan="6">${key}</td>
+            <td class="ta-right">${value}</td>
         `
     }
 
@@ -135,17 +136,17 @@ export class Template{
 
     static summarySingleItem(item) {
         return /*html*/`
-            <td>${item.amount}</td>
-            <td>x</td>
-            <td class="flex-col">${item.item.dishName}</td>
-            <td class="value">${item.euroValue}</td>
+            <td class="w16 ta-right">${item.amount}</td>
+            <td class="w16">x</td>
+            <td>${item.dish.dishName}</td>
+            <td class="w80 ta-right">${item.euroValue}</td>
         `
     }
 
-    static summarySingleEntry(name, value) {
+    static summarySingleEntry(key, value) {
         return /*html*/`
-            <td colspan="3" class="flex-col">${name}</td>
-            <td class="value">${value}</td>
+            <td colspan="3">${key}</td>
+            <td class="ta-right">${value}</td>
         `
     }
 

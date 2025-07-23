@@ -22,7 +22,7 @@ export class CartItem{
 
     decAmount() {
         this.amount--;
-        this.calc;
+        this.calc();
     }
 }
 
@@ -113,7 +113,20 @@ export class Cart{
     }
 
     order() {
+        console.log('Order');
+        this.renderSummaryItems();
+        this.renderSummarySum();
+    }
 
+    view() {
+        document.querySelector('.cart-wrapper').style.display = 'flex';
+        window.scrollTo(0,0);
+    }
+
+    unview() {
+        if (window.innerWidth <= 1100) {
+            document.querySelector('.cart-wrapper').style.display = 'none';
+        }
     }
     // #endregion
 
@@ -145,6 +158,35 @@ export class Cart{
         refTable.appendChild(deliveryTr);
         refTable.appendChild(totalTr);
     }
+
+    renderSummaryItems() {
+        const refTable = document.querySelector('.summary table');
+        refTable.innerHTML = '';
+        if (this.cartItems.length > 0) {
+            this.cartItems.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = Template.summarySingleItem(item);
+                refTable.appendChild(tr);
+            });
+            document.querySelector('.overlay').classList.remove('d-none');
+        }
+    }
+
+    renderSummarySum() {
+        const refTable = document.querySelector('.summary table');
+        const sumTr = document.createElement('tr');
+        const deliveryTr = document.createElement('tr');
+        const totalTr = document.createElement('tr');
+
+        sumTr.innerHTML = Template.summarySingleEntry('Summe', this.euroSum);
+        deliveryTr.innerHTML = Template.summarySingleEntry('Versand', this.euroDelivery);
+        totalTr.innerHTML = Template.summarySingleEntry('Gesamt', this.euroTotal);
+        totalTr.classList.add('total');
+
+        refTable.appendChild(sumTr);
+        refTable.appendChild(deliveryTr);
+        refTable.appendChild(totalTr);
+    }
     // #endregion
 
     // #region Event
@@ -155,7 +197,9 @@ export class Cart{
             if (!this.orderReady) {
                 this.orderReady = true;
                 refOrderBtn.classList.add('order-ready');
-                refOrderBtn.addEventListener('click', this.order);
+                refOrderBtn.addEventListener('click', () => {
+                    this.order();
+                });
             }
         } else {
             if (this.orderReady) {

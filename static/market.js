@@ -78,6 +78,20 @@ export class Market {
             }
         }
     }
+
+    clickCartBtn() {
+        document.querySelector('.cart-btn').addEventListener('click', this.cart.view);
+    }
+
+    clickCartContent() {
+        document.querySelector('.cart-content').addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+    }
+
+    clickCart() {
+        document.querySelector('.cart-wrapper').addEventListener('click', this.cart.unview);
+    }
     // #endregion
 
     // #region Requests
@@ -94,8 +108,11 @@ export class Market {
                 });
                 this.renderShelves();
                 this.renderDishes();
+                this.clickCartBtn();
                 this.renderReviews();
                 this.addDishCardEvent();
+                this.clickCartContent();
+                this.clickCart();
             } else {
                 let output = '';
                 switch (response.status) {
