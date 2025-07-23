@@ -29,22 +29,24 @@ export class CartItem{
 export class Cart{
     //  #region Attibutes
     sum = 0;
-    euroSum = '0,00 €';
+    euroSum;
     delivery = 5;
-    euroDelivery = '5,00 €';
+    euroDelivery;
     total = 0;
-    euroTotal = '5,00 €';
+    euroTotal;
     cartItems = [];
     orderReady = false;
     // #endregion
 
     constructor() {
+        this.currency();
         this.renderSum();
     }
 
     // #region Methods
     // #region Primary
     calc() {
+        this.sum = 0;
         if (this.cartItems.length > 0) {
             this.sum = 0;
 
@@ -53,18 +55,25 @@ export class Cart{
             });
             this.delivery = (this.sum < 20) ? 5 : 0;
             this.total = this.sum + this.delivery;
-
-            this.euroSum = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.sum);
-            this.euroDelivery = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.delivery);
-            this.euroTotal = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.total);
+        } else {
+            this.delivery = 0;
+            this.total = 0
         }
+    }
+
+    currency() {
+        this.euroSum = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.sum);
+        this.euroDelivery = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.delivery);
+        this.euroTotal = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR'}).format(this.total);
     }
 
     refresh() {
         this.calc();
+        this.currency();
         this.clickOrderBtn();
         this.renderItems();
         this.clickIncBtn();
+        this.clickDelBtn();
         this.renderSum();
     }
 
@@ -89,6 +98,10 @@ export class Cart{
                 }
         }
         this.refresh();
+    }
+
+    removeItem(index) {
+        this.cartItems.splice(index, 1);
     }
 
     order() {
@@ -151,6 +164,18 @@ export class Cart{
             incBtns.forEach((btn, index) => {
                 btn.addEventListener('click', () => {
                     this.cartItems[index].incAmount();
+                    this.refresh();
+                });
+            });
+        }
+    }
+
+    clickDelBtn() {
+        const delBtns = document.querySelectorAll('.del');
+        if (this.cartItems.length > 0) {
+            delBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    this.removeItem(index);
                     this.refresh();
                 });
             });
