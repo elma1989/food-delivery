@@ -109,19 +109,19 @@ export class Template{
 
     static singleItem (item) {
         return /*html*/`
-            <td><button class="inc">+</button></td>
-            <td class="amount-col">${item.amount}</td>
-            <td><button class="dec">-</button></td>
-            <td class="mul-col">x</td>
-            <td>${item.item.dishName}</td>
-            <td><button class="del"><img src="static/assets/icons/delete.svg"></button></td>
-            <td class="value">${item.euroValue}</td>
+            <td class="w16"><button class="inc">+</button></td>
+            <td class="w16 ta-right">${item.amount}</td>
+            <td class="w16"><button class="dec">-</button></td>
+            <td class="w16">x</td>
+            <td>${item.dish.dishName}</td>
+            <td class="w16"><button class="del"><img src="static/assets/icons/delete.svg"></button></td>
+            <td class="w80 ta-right">${item.euroValue}</td>
         `
     }
 
     static singleItemEntry (key, value) {
         return /*html*/`
-            <td>${key}</td><td class="value">${value}</td>
+            <td colspan="6">${key}</td><td class="ta-right">${value}</td>
         `
     }
 

@@ -58,9 +58,50 @@ export class Cart{
         }
     }
 
+    refresh() {
+        this.calc();
+        this.renderItems();
+        this.renderSum();
+    }
+
+    addItem(item) {
+        let isIn = false;
+        const cartItem = new CartItem(item, 1);
+        if (this.cartItems.length == 0) {
+            this.cartItems.push(cartItem);
+        } else {
+            let i = 0;
+            for (i; i < this.cartItems.length; i++) {
+                if (this.cartItems[i].dish.dishName == cartItem.dish.dishName) {
+                    isIn = true;
+                    break;
+                }
+            }
+
+            if (isIn) {
+                    this.cartItems[i].incAmount();
+                } else {
+                    this.cartItems.push(cartItem);
+                }
+        }
+        this.refresh();
+    }
+
     // #Render
+    renderItems() {
+        const refTable = document.querySelectorAll('.cart-content table')[0];
+        refTable.innerHTML = '';
+        if (this.cartItems.length > 0) {
+            this.cartItems.forEach (item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = Template.singleItem(item);
+                refTable.appendChild(tr);
+            })
+        }
+    }
+
     renderSum() {
-        const refTable = document.querySelectorAll('.cart-content table')[1];
+        const refTable = document.querySelectorAll('.cart-content table')[0];
         const sumTr = document.createElement('tr');
         const deliveryTr = document.createElement('tr');
         const totalTr = document.createElement('tr');
