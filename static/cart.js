@@ -73,6 +73,7 @@ export class Cart{
         this.clickOrderBtn();
         this.renderItems();
         this.clickIncBtn();
+        this.clickDecBtn();
         this.clickDelBtn();
         this.renderSum();
     }
@@ -102,6 +103,13 @@ export class Cart{
 
     removeItem(index) {
         this.cartItems.splice(index, 1);
+    }
+
+    decItem(index) {
+        this.cartItems[index].decAmount();
+        if (this.cartItems[index].amount == 0) {
+            this.removeItem(index);
+        }
     }
 
     order() {
@@ -167,6 +175,18 @@ export class Cart{
                     this.refresh();
                 });
             });
+        }
+    }
+
+    clickDecBtn() {
+        const decBtns = document.querySelectorAll('.dec');
+        if (this.cartItems.length > 0) {
+            decBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    this.decItem(index);
+                    this.refresh();
+                })
+            })
         }
     }
 
